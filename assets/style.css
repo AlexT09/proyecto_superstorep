@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --ink: #3d405b;
+  --ink-soft: #5c6078;
+  --muted: #7a7e96;
+  --line: #EEF0F6;
+  --shadow: 0 4px 16px rgba(74,78,105,.08);
+  --shadow-hover: 0 10px 28px rgba(74,78,105,.14);
+}
+
+* { box-sizing: border-box; }
+body { background:#F8F9FC; font-family:'Nunito','Segoe UI',sans-serif; color:#4A4E69; }
+
+.app-header { background:linear-gradient(120deg,#A8D5E5 0%,#D5C6E8 55%,#F7C6D0 100%); border-radius:0 0 28px 28px; padding:32px 0 24px; margin-bottom:28px; box-shadow:0 6px 20px rgba(74,78,105,.12); }
+.app-header h1 { font-weight:800; font-size:2rem; margin:0; color:var(--ink); letter-spacing:-.02em; }
+.app-header p { margin:6px 0 0; color:var(--ink-soft); font-size:1.02rem; }
+
+.nav-tabs { border-bottom:none; gap:8px; flex-wrap:wrap; margin-bottom:8px !important; }
+.nav-tabs .nav-link { border:none; border-radius:14px; background:#fff; color:var(--ink); font-weight:700; font-size:.88rem; box-shadow:var(--shadow); padding:.55rem 1rem; transition:background .15s ease, color .15s ease, box-shadow .15s ease; }
+.nav-tabs .nav-link:hover { background:#EEF0F6; box-shadow:var(--shadow-hover); }
+.nav-tabs .nav-link.active { background:#8E7CC3; color:#fff; box-shadow:0 6px 18px rgba(142,124,195,.35); }
+
+.page-title { font-weight:800; color:var(--ink); letter-spacing:-.01em; }
+.page-subtitle { color:var(--muted); font-size:1.05rem; margin-bottom:0; }
+
+.soft-card { border:none; border-radius:18px; box-shadow:var(--shadow); overflow:hidden; transition:box-shadow .2s ease, transform .2s ease; }
+.soft-card:hover { box-shadow:var(--shadow-hover); transform:translateY(-2px); }
+.soft-card-header { font-weight:800; border:none; color:var(--ink); padding:.85rem 1.15rem; font-size:1rem; }
+.soft-card .card-body { padding:1.15rem; }
+
+.kpi-card { border:none; border-radius:18px; text-align:center; box-shadow:var(--shadow); transition:box-shadow .2s ease, transform .2s ease; }
+.kpi-card:hover { box-shadow:var(--shadow-hover); transform:translateY(-2px); }
+.kpi-label { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); }
+.kpi-value { font-size:1.9rem; font-weight:800; color:var(--ink); line-height:1.2; }
+.kpi-hint { font-size:.8rem; color:#6b6f88; }
+
+.section-title { font-weight:800; color:var(--ink); margin:36px 0 16px; padding-left:14px; border-left:6px solid #D5C6E8; }
+.section-title:first-of-type { margin-top:8px; }
+
+.insight-text { font-size:.85rem; color:var(--ink-soft); margin:12px 0 0; line-height:1.55; }
+
+.table { --bs-table-bg:transparent; }
+.table thead th { background:var(--line); color:var(--ink); border:none; font-size:.85rem; text-transform:uppercase; letter-spacing:.03em; }
+.table td, .table th { vertical-align:middle; }
+
+.footer { text-align:center; color:#9a9db3; font-size:.85rem; margin:44px 0 24px; }
+
+code { background:#EEF0F6; color:#6a4c9c; border-radius:6px; padding:.1rem .4rem; font-size:.9em; }
+
+.js-plotly-plot .plotly .modebar { display:none; }
+
+@media (max-width: 576px) {
+  .app-header h1 { font-size:1.5rem; }
+  .page-title { font-size:1.3rem; }
+  .nav-tabs .nav-link { font-size:.8rem; padding:.45rem .75rem; }
+}
