@@ -6,8 +6,8 @@ Ejecutar:  python app.py   ->   http://127.0.0.1:8050
 import dash_bootstrap_components as dbc
 from dash import Dash, Input, Output, dcc, html
 
-from tabs import (conclusiones, contexto, eda, introduccion, limitaciones, marco_teorico,
-                  metodologia, objetivos, problema)
+from tabs import (conclusiones, contexto, dashboard, eda, introduccion, limitaciones,
+                  marco_teorico, metodologia, objetivos, problema)
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],
            suppress_callback_exceptions=True, title="Proyecto Sample Superstore")
@@ -22,6 +22,7 @@ TABS = [
     ("marco", "Marco teórico", marco_teorico),
     ("metodologia", "Metodología", metodologia),
     ("eda", "EDA", eda),
+    ("dashboard", "Dashboard", dashboard),
     ("limitaciones", "Limitaciones", limitaciones),
     ("conclusiones", "Conclusiones", conclusiones),
 ]
@@ -36,7 +37,7 @@ app.layout = html.Div([
         dbc.Tabs([dbc.Tab(label=label, tab_id=tab_id) for tab_id, label, _ in TABS],
                  id="main-tabs", active_tab="introduccion", className="mb-4"),
         dcc.Loading(html.Div(id="tab-content"), type="dot", color="#2E6F95"),
-        html.Div("EDA original: Alex Teran y David Estrada", className="footer"),
+        html.Div("Proyecto: Alex Teran y David Estrada", className="footer"),
     ], fluid="xl"),
 ])
 

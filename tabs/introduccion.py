@@ -22,5 +22,4 @@ def layout():
                        "y el EDA.", className="text-muted"),
             ], "lavender"), md=5, className="mb-3"),
         ]),
-        html.Div("EDA: Alex Teran y David Estrada", className="footer"),
     ])
