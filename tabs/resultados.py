@@ -3,12 +3,14 @@ import dash_bootstrap_components as dbc
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from dash import dcc, html
+from dash import Input, Output, callback, dcc, html
 
-from common import (ACCENT, CATEGORY_ACCENT, CATEGORY_COLORS, COLORWAY, PASTEL, TEXT,
-                    insight, load_data, page_header, soft_card, style_fig)
+from common import (ACCENT, BRAND, BRAND_DARK, BRAND_DARKER, CATEGORY_ACCENT, CATEGORY_COLORS,
+                    COLORWAY, MARK, PASTEL, TEXT, insight, load_data, page_header, soft_card,
+                    style_fig)
 
 CFG = {"displayModeBar": False}
+MONO_SCALE = [[0, "#FFFFFF"], [0.5, PASTEL["yellow"]], [1, BRAND_DARKER]]
 
 
 def _graph(fig, height=None):
@@ -17,7 +19,7 @@ def _graph(fig, height=None):
 
 def _mean_markers(df, col):
     """Punto sobre la media de cada grupo (equivalente a stat_summary de ggplot)."""
-    return [go.Scatter(x=[c], y=[y], mode="markers", marker=dict(color=TEXT, size=9, line=dict(width=1, color="white")),
+    return [go.Scatter(x=[c], y=[y], mode="markers", marker=dict(color=MARK, size=9, line=dict(width=1, color="white")),
                        showlegend=False) for c, y in df.groupby(col).Sales.mean().items()]
 
 
@@ -128,7 +130,7 @@ def _box_log(df, col, xlabel):
     cmap = CATEGORY_COLORS if col == "Category" else None
     fig = px.box(d, x=col, y="log_sales", color=col, color_discrete_map=cmap, color_discrete_sequence=seq)
     fig.add_traces([go.Scatter(x=[c], y=[y], mode="markers",
-                               marker=dict(color=TEXT, size=9, line=dict(width=1, color="white")), showlegend=False)
+                               marker=dict(color=MARK, size=9, line=dict(width=1, color="white")), showlegend=False)
                     for c, y in d.groupby(col).log_sales.mean().items()])
     fig.update_layout(showlegend=False)
     fig.update_xaxes(title=xlabel)
@@ -148,7 +150,7 @@ def _burbuja(df):
 
 def _bins2d(df):
     fig = px.density_heatmap(df, x="Discount", y="Sales", nbinsx=16, nbinsy=40,
-                             color_continuous_scale=[[0, "#FFFFFF"], [0.3, PASTEL["yellow"]], [0.6, PASTEL["peach"]], [1, PASTEL["pink"]]])
+                             color_continuous_scale=MONO_SCALE)
     fig.update_yaxes(range=[0, 1500])
     fig.update_layout(coloraxis_colorbar=dict(title="Frecuencia"))
     return style_fig(fig, 340)
@@ -157,7 +159,7 @@ def _bins2d(df):
 def _corr(df):
     c = df[["Sales", "Quantity", "Discount", "Profit"]].corr().round(2)
     fig = px.imshow(c, text_auto=True, zmin=-1, zmax=1,
-                    color_continuous_scale=[[0, PASTEL["pink"]], [0.5, "#FFFFFF"], [1, PASTEL["blue"]]])
+                    color_continuous_scale=[[0, "#FFFFFF"], [1, BRAND_DARK]])
     fig.update_layout(coloraxis_showscale=False)
     return style_fig(fig, 340)
 
@@ -317,11 +319,51 @@ def _tiempo(df):
     ])
 
 
+def _filtros(df):
+    return dbc.Row([
+        dbc.Col([
+            html.Label("Filtrar por categoría", className="filter-label"),
+            dcc.Checklist(
+                id="res-filtro-category",
+                options=[{"label": f" {c}", "value": c} for c in sorted(df.Category.unique())],
+                value=sorted(df.Category.unique()), inline=True, className="filter-check",
+                inputClassName="filter-check-input", labelClassName="filter-check-label",
+            ),
+        ], md=6, className="mb-2"),
+        dbc.Col([
+            html.Label("Filtrar por región", className="filter-label"),
+            dcc.Checklist(
+                id="res-filtro-region",
+                options=[{"label": f" {r}", "value": r} for r in sorted(df.Region.unique())],
+                value=sorted(df.Region.unique()), inline=True, className="filter-check",
+                inputClassName="filter-check-input", labelClassName="filter-check-label",
+            ),
+        ], md=6, className="mb-2"),
+    ], className="filter-bar mb-4")
+
+
+@callback(
+    Output("resultados-body", "children"),
+    Input("res-filtro-category", "value"), Input("res-filtro-region", "value"),
+)
+def _actualizar_resultados(categorias, regiones):
+    df = load_data()
+    if categorias:
+        df = df[df.Category.isin(categorias)]
+    if regiones:
+        df = df[df.Region.isin(regiones)]
+    if df.empty:
+        return dbc.Alert("No hay pedidos para esta combinación de filtros.", color="warning", className="mt-3")
+    return html.Div([_univariado(df), _bivariado(df), _tiempo(df)], className="fade-in")
+
+
 def layout():
     df = load_data()
     return html.Div([
-        page_header("Resultados", "Análisis univariado y bivariado del EDA"),
-        _univariado(df),
-        _bivariado(df),
-        _tiempo(df),
+        page_header("Resultados", "Análisis univariado y bivariado del EDA — filtra por categoría o región para explorar"),
+        _filtros(df),
+        dbc.Alert("Los gráficos se recalculan según el filtro. Las cifras citadas en los comentarios de "
+                  "interpretación corresponden al análisis completo del EDA original (sin filtrar).",
+                  color="light", className="filter-note mb-4"),
+        dcc.Loading(html.Div(id="resultados-body"), type="dot", color=BRAND),
     ])

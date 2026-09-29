@@ -16,36 +16,45 @@ DATA_PATH = ROOT / "data" / "superstore_transformado.csv"
 MODEL_PATH = ROOT / "model" / "model.pkl"
 METRICS_PATH = ROOT / "model" / "metrics.json"
 
-# ---------------------------------------------------------------- paleta pastel
+# ---------------------------------------------------------------- paleta monocromática
+# Todo el dashboard usa un único color de marca (azul petróleo); las claves de PASTEL/ACCENT
+# ya no representan colores literales, son solo "niveles" (tintas más claras u oscuras del
+# mismo azul) para poder distinguir series sin salirse de la paleta de marca.
+BRAND = "#2E6F95"
+BRAND_DARK = "#1F5570"
+BRAND_DARKER = "#153B4E"
+BRAND_LIGHT = "#EAF2F7"
+
 PASTEL = {
-    "blue": "#A8D5E5",
-    "pink": "#F7C6D0",
-    "green": "#C9E4C5",
-    "peach": "#FDE2B3",
-    "lavender": "#D5C6E8",
-    "yellow": "#FFF3B0",
+    "blue": "#DCEBF2",
+    "green": "#B7D4E3",
+    "peach": "#8FBBD1",
+    "pink": "#63A0BC",
+    "yellow": "#3B85A8",
+    "lavender": "#1F5570",
 }
 COLORWAY = list(PASTEL.values())
-TEXT = "#4A4E69"
-# Versión más saturada de cada pastel, para líneas/puntos que necesitan más contraste
+TEXT = "#2f3247"
+# Tintas más saturadas, para líneas/puntos que necesitan más contraste sobre blanco
 ACCENT = {
-    "blue": "#5B9BC4",
-    "pink": "#DB8AA0",
-    "green": "#6FAE6F",
-    "peach": "#E8A15C",
-    "lavender": "#8E7CC3",
-    "yellow": "#D9BE3F",
+    "blue": "#3B85A8",
+    "pink": "#63A0BC",
+    "green": "#3B85A8",
+    "peach": "#1F5570",
+    "lavender": "#1F5570",
+    "yellow": "#8FBBD1",
 }
-# Color fijo por categoría para que todos los gráficos sean coherentes
+MARK = BRAND_DARKER  # color de puntos de referencia (p. ej. la media en un boxplot)
+# Tres tintas del mismo azul para distinguir categorías sin salir del color de marca
 CATEGORY_COLORS = {
-    "Furniture": PASTEL["peach"],
-    "Office Supplies": PASTEL["blue"],
-    "Technology": PASTEL["lavender"],
+    "Furniture": "#8FBBD1",
+    "Office Supplies": "#153B4E",
+    "Technology": "#3B85A8",
 }
 CATEGORY_ACCENT = {
-    "Furniture": ACCENT["peach"],
-    "Office Supplies": ACCENT["blue"],
-    "Technology": ACCENT["lavender"],
+    "Furniture": "#63A0BC",
+    "Office Supplies": "#153B4E",
+    "Technology": "#1F5570",
 }
 
 
@@ -83,11 +92,12 @@ def page_header(title: str, subtitle: str = "", icon: str = "") -> html.Div:
 
 
 def soft_card(title, body, color="blue", height_full=True):
-    """Tarjeta con encabezado de color pastel."""
+    """Tarjeta blanca con un acento de color sutil (borde) según `color`."""
+    classes = f"soft-card accent-{color}" + (" h-100" if height_full else "")
     return dbc.Card(
-        [dbc.CardHeader(title, style={"backgroundColor": PASTEL[color]}, className="soft-card-header"),
+        [dbc.CardHeader(title, className="soft-card-header"),
          dbc.CardBody(body)],
-        className="soft-card h-100" if height_full else "soft-card",
+        className=classes,
     )
 
 
@@ -103,6 +113,5 @@ def kpi_card(label, value, color="blue", hint=""):
             html.Div(value, className="kpi-value"),
             html.Div(hint, className="kpi-hint"),
         ]),
-        style={"backgroundColor": PASTEL[color]},
-        className="kpi-card h-100",
+        className=f"kpi-card accent-{color} h-100",
     )
