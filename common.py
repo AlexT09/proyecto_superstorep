@@ -16,10 +16,8 @@ DATA_PATH = ROOT / "data" / "superstore_transformado.csv"
 MODEL_PATH = ROOT / "model" / "model.pkl"
 METRICS_PATH = ROOT / "model" / "metrics.json"
 
-# ---------------------------------------------------------------- paleta monocromática
-# Todo el dashboard usa un único color de marca (azul petróleo); las claves de PASTEL/ACCENT
-# ya no representan colores literales, son solo "niveles" (tintas más claras u oscuras del
-# mismo azul) para poder distinguir series sin salirse de la paleta de marca.
+# ---------------------------------------------------------------- 
+# El dashboard usa un único color de marca (azul petróleo);
 BRAND = "#2E6F95"
 BRAND_DARK = "#1F5570"
 BRAND_DARKER = "#153B4E"

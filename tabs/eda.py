@@ -1,11 +1,11 @@
-"""tabs/resultados.py — Análisis exploratorio: univariado y bivariado."""
+"""tabs/eda.py — Análisis exploratorio: univariado y bivariado."""
 import dash_bootstrap_components as dbc
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from dash import Input, Output, callback, dcc, html
+from dash import dcc, html
 
-from common import (ACCENT, BRAND, BRAND_DARK, BRAND_DARKER, CATEGORY_ACCENT, CATEGORY_COLORS,
+from common import (ACCENT, BRAND_DARK, BRAND_DARKER, CATEGORY_ACCENT, CATEGORY_COLORS,
                     COLORWAY, MARK, PASTEL, TEXT, insight, load_data, page_header, soft_card,
                     style_fig)
 
@@ -319,51 +319,9 @@ def _tiempo(df):
     ])
 
 
-def _filtros(df):
-    return dbc.Row([
-        dbc.Col([
-            html.Label("Filtrar por categoría", className="filter-label"),
-            dcc.Checklist(
-                id="res-filtro-category",
-                options=[{"label": f" {c}", "value": c} for c in sorted(df.Category.unique())],
-                value=sorted(df.Category.unique()), inline=True, className="filter-check",
-                inputClassName="filter-check-input", labelClassName="filter-check-label",
-            ),
-        ], md=6, className="mb-2"),
-        dbc.Col([
-            html.Label("Filtrar por región", className="filter-label"),
-            dcc.Checklist(
-                id="res-filtro-region",
-                options=[{"label": f" {r}", "value": r} for r in sorted(df.Region.unique())],
-                value=sorted(df.Region.unique()), inline=True, className="filter-check",
-                inputClassName="filter-check-input", labelClassName="filter-check-label",
-            ),
-        ], md=6, className="mb-2"),
-    ], className="filter-bar mb-4")
-
-
-@callback(
-    Output("resultados-body", "children"),
-    Input("res-filtro-category", "value"), Input("res-filtro-region", "value"),
-)
-def _actualizar_resultados(categorias, regiones):
-    df = load_data()
-    if categorias:
-        df = df[df.Category.isin(categorias)]
-    if regiones:
-        df = df[df.Region.isin(regiones)]
-    if df.empty:
-        return dbc.Alert("No hay pedidos para esta combinación de filtros.", color="warning", className="mt-3")
-    return html.Div([_univariado(df), _bivariado(df), _tiempo(df)], className="fade-in")
-
-
 def layout():
     df = load_data()
     return html.Div([
-        page_header("Resultados", "Análisis univariado y bivariado del EDA — filtra por categoría o región para explorar"),
-        _filtros(df),
-        dbc.Alert("Los gráficos se recalculan según el filtro. Las cifras citadas en los comentarios de "
-                  "interpretación corresponden al análisis completo del EDA original (sin filtrar).",
-                  color="light", className="filter-note mb-4"),
-        dcc.Loading(html.Div(id="resultados-body"), type="dot", color=BRAND),
+        page_header("EDA", "Análisis univariado y bivariado: qué factores explican el nivel de ventas"),
+        html.Div([_univariado(df), _bivariado(df), _tiempo(df)], className="fade-in"),
     ])

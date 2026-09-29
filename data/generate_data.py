@@ -1,14 +1,3 @@
-"""
-data/generate_data.py
-Replica el ETL del EDA en R (01-intro.Rmd) y prepara el dataset del dashboard.
-
-  Extracción    : lee data/raw/Sample - Superstore.csv (codificación latin1)
-  Transformación: convierte fechas (mes/día/año), ordena por fecha de pedido
-                  (la variable respuesta del modelo es log(Sales), se calcula al entrenar)
-  Carga         : escribe data/superstore_transformado.csv
-
-Uso:  python data/generate_data.py
-"""
 from pathlib import Path
 
 import pandas as pd

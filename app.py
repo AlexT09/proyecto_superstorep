@@ -1,20 +1,16 @@
 """
-app.py — Dashboard EDA Superstore (Dash + Bootstrap).
+app.py — Proyecto Sample Superstore (Dash + Bootstrap).
 Cada pestaña vive en tabs/<nombre>.py y expone una función layout().
 Ejecutar:  python app.py   ->   http://127.0.0.1:8050
 """
 import dash_bootstrap_components as dbc
 from dash import Dash, Input, Output, dcc, html
 
-# Las pestañas se importan ANTES de crear la app: los módulos de tabs/ usan el decorador
-# @callback a nivel de módulo, que registra cada callback en un mapa global; Dash() solo
-# copia ese mapa global hacia la app en el momento en que se instancia, así que la app debe
-# crearse DESPUÉS de que todos los callbacks ya se hayan registrado.
-from tabs import (conclusiones, contexto, introduccion, limitaciones, marco_teorico,
-                  metodologia, objetivos, problema, resultados)
+from tabs import (conclusiones, contexto, eda, introduccion, limitaciones, marco_teorico,
+                  metodologia, objetivos, problema)
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],
-           suppress_callback_exceptions=True, title="EDA Superstore")
+           suppress_callback_exceptions=True, title="Proyecto Sample Superstore")
 server = app.server
 
 # (id, etiqueta, módulo) — el orden define la navegación
@@ -25,7 +21,7 @@ TABS = [
     ("objetivos", "Objetivos", objetivos),
     ("marco", "Marco teórico", marco_teorico),
     ("metodologia", "Metodología", metodologia),
-    ("resultados", "Resultados", resultados),
+    ("eda", "EDA", eda),
     ("limitaciones", "Limitaciones", limitaciones),
     ("conclusiones", "Conclusiones", conclusiones),
 ]
@@ -33,7 +29,7 @@ MODULES = {tab_id: mod for tab_id, _, mod in TABS}
 
 app.layout = html.Div([
     html.Div(dbc.Container([
-        html.H1("EDA Superstore"),
+        html.H1("Proyecto Sample Superstore"),
         html.P("Factores que explican el nivel de ventas · Análisis exploratorio de datos (EDA) con Dash"),
     ]), className="app-header"),
     dbc.Container([
