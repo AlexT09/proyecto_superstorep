@@ -91,9 +91,9 @@ def _univariado(df):
                 _graph(_hist_log(df, "pink")),
                 insight("Al aplicar el logaritmo, la distribución se vuelve más simétrica y manejable. La "
                         "mayor concentración de observaciones se encuentra aproximadamente entre "
-                        "log(Sales) = 2.5 y 4, donde está el máximo de la densidad. Hacia la derecha "
-                        "aparece un segundo abultamiento, alrededor de 5, que corresponde a pedidos de "
-                        "mayor valor; más adelante se ve que coincide con Furniture y Technology."),
+                        "log(Sales) = 2.5 y 4, donde está el máximo de la densidad. Hacia la derecha la "
+                        "densidad disminuye, con un pequeño abultamiento cerca de 5, mostrando una menor "
+                        "concentración de ventas altas."),
             ], "pink"), lg=6, className="mb-3"),
         ]),
         dbc.Row([
@@ -220,12 +220,9 @@ def _bivariado(df):
         dbc.Row([
             dbc.Col(soft_card("Boxplot: Sales por categoría", [
                 _graph(_box_raw(df, "Category", "Categoría")),
-                insight("En escala original las cajas quedan aplastadas por los valores atípicos, por eso el "
-                        "gráfico muestra sobre todo los extremos. Technology tiene los pedidos más grandes, "
-                        "con algunos que superan los $20000. Office Supplies tiene la caja más baja: la "
-                        "mayoría de sus pedidos son de poco valor, aunque unos pocos se acercan a $10000. "
-                        "Furniture tiene el rango más corto, pero su caja está a la altura de la de "
-                        "Technology, así que sus pedidos típicos no son de menor valor."),
+                insight("Technology muestra el rango de ventas más alto, con algunos pedidos que superan los "
+                        "$20000. Office Supplies tiene la caja más baja, aunque algunos pedidos se acercan a "
+                        "$10000. Furniture es la categoría con el menor rango de ventas entre las tres."),
             ], "lavender"), lg=6, className="mb-3"),
             dbc.Col(soft_card("Boxplot: log(Sales) por categoría", [
                 _graph(_box_log(df, "Category", "Categoría")),
@@ -264,8 +261,7 @@ def _bivariado(df):
             dbc.Col(soft_card("Bins 2D: Discount vs. Sales", [
                 _graph(_bins2d(df)),
                 insight("La mayoría de los pedidos se concentra en descuentos bajos (0.0-0.2), y las celdas "
-                        "con montos de venta más altos aparecen dispersas en varios niveles de descuento. Con "
-                        "los descuentos más altos (0.6 a 0.8) los pedidos tienden a ser de menor valor."),
+                        "con montos de venta más altos aparecen dispersas en varios niveles de descuento."),
             ], "yellow"), lg=6, className="mb-3"),
         ]),
         dbc.Row([
@@ -289,9 +285,9 @@ def _tiempo(df):
         dbc.Row([
             dbc.Col(soft_card("Evolución mensual de ventas", [
                 _graph(fig_mensual),
-                insight("Los puntos muestran un patrón que se repite cada año: las ventas son bajas a "
-                        "comienzos de año y suben hacia el final, con los meses más altos en septiembre, "
-                        "noviembre y diciembre. Es decir, las ventas tienen un comportamiento estacional."),
+                insight("Los puntos muestran un patrón que se repite cada año: las ventas son más bajas a "
+                        "comienzos de año y suben hacia el final, lo que sugiere un comportamiento "
+                        "estacional."),
             ], "pink"), lg=6, className="mb-3"),
             dbc.Col(soft_card("Tendencia de ventas en el tiempo (loess)", [
                 _graph(_tendencia_loess(t_mensual)),
@@ -306,8 +302,7 @@ def _tiempo(df):
                 _graph(_tendencia_categoria(df)),
                 insight("Las tres categorías crecen hacia el final del periodo, y Technology se mantiene casi "
                         "siempre por encima de las otras dos. Esto es coherente con lo visto antes: "
-                        "Technology tiene menos pedidos pero de mayor valor. Su crecimiento viene sobre todo "
-                        "de vender más pedidos, más que de pedidos cada vez más caros. Technology presenta "
+                        "Technology tiene menos pedidos pero de mayor valor. Technology presenta "
                         "picos donde sobresale claramente por encima de las otras dos categorías, reforzando "
                         "que es la categoría con mayor nivel de ventas."),
             ], "lavender"), md=12, className="mb-3"),

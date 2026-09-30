@@ -134,12 +134,9 @@ function Index() {
   const byMean = (g: typeof s.byCategory) => [...g].sort((a, b) => b.meanSales - a.meanSales)[0];
   const byOrders = (g: typeof s.byCategory) => [...g].sort((a, b) => b.orders - a.orders)[0];
   const topCat = byMean(s.byCategory);
-  const topSeg = byMean(s.bySegment);
   const mostOrdersCat = byOrders(s.byCategory);
   const mostOrdersReg = byOrders(s.byRegion);
-  const lowMargin = [...s.byCategory].sort((a, b) => a.margin - b.margin)[0];
-  const topReg = [...s.byRegion].sort((a, b) => b.totalProfit - a.totalProfit)[0];
-  const worstReg = [...s.byRegion].sort((a, b) => a.margin - b.margin)[0];
+  const mostOrdersSeg = byOrders(s.bySegment);
   const ask = (q: string) => setPending(q);
 
   return (
@@ -231,13 +228,7 @@ function Index() {
                 "Describe la distribución de Sales con sus estadísticos de resumen y explica por qué conviene analizar log(Sales).",
               )
             }
-            insight={
-              <>
-                Asimetría de <b>{fmtNum(s.sales.skew)}</b>: la media (
-                <b>{fmtMoney(s.sales.mean)}</b>) supera a la mediana (
-                <b>{fmtMoney(s.sales.median)}</b>). Pocos pedidos grandes concentran el ingreso.
-              </>
-            }
+            insight="La mayoría de los pedidos se concentra en valores bajos de venta, con una cola larga hacia la derecha: unos pocos pedidos grandes jalan el promedio hacia arriba."
           >
             <ChartBox h={230}>
               <BarChart data={hist} margin={{ bottom: 18, left: 6 }}>
@@ -257,7 +248,7 @@ function Index() {
                 "¿Por qué conviene analizar log(Sales) en vez de Sales directamente? Explica el efecto de la transformación logarítmica sobre la asimetría.",
               )
             }
-            insight="En escala logarítmica la distribución se acerca a la normal, lo que facilita comparar el valor típico de un pedido entre grupos sin que los pocos pedidos extremos dominen la lectura."
+            insight="Al aplicar el logaritmo la distribución se vuelve más simétrica y manejable, lo que facilita comparar grupos."
           >
             <ChartBox h={230}>
               <AreaChart data={dens} margin={{ bottom: 18, left: 6 }}>
@@ -287,8 +278,8 @@ function Index() {
             }
             insight={
               <>
-                <b>{mostOrdersCat?.name}</b> concentra más pedidos, pero <b>{topCat?.name}</b> tiene
-                la venta media más alta ({fmtMoney(topCat?.meanSales ?? 0)}).
+                <b>{mostOrdersCat?.name}</b> es la categoría que más rota en número de pedidos, aunque{" "}
+                <b>{topCat?.name}</b> tiene pedidos de mayor valor.
               </>
             }
           >
@@ -311,8 +302,8 @@ function Index() {
             }
             insight={
               <>
-                <b>{mostOrdersReg?.name}</b> es la región con más pedidos, con una venta media de{" "}
-                {fmtMoney(mostOrdersReg?.meanSales ?? 0)} por pedido.
+                <b>{mostOrdersReg?.name}</b> tiene el mayor número de pedidos. Las diferencias entre
+                regiones son menos marcadas que entre categorías.
               </>
             }
           >
@@ -335,8 +326,8 @@ function Index() {
             }
             insight={
               <>
-                <b>{topSeg?.name}</b> es el segmento de mayor ticket, con venta media de{" "}
-                {fmtMoney(topSeg?.meanSales ?? 0)} por pedido.
+                <b>{mostOrdersSeg?.name}</b> tiene más pedidos y por eso genera más ventas totales,
+                aunque ningún segmento sobresale en el valor de cada pedido.
               </>
             }
           >
@@ -360,10 +351,8 @@ function Index() {
             }
             insight={
               <>
-                Beneficio (r = {fmtNum(s.corr.profit)}) y cantidad (r = {fmtNum(s.corr.quantity)})
-                acompañan a las ventas. El descuento se relaciona con el beneficio con r ={" "}
-                {fmtNum(s.corr.discountProfit)}; el {fmtPct(s.highDiscountLossPct, 0)} de los
-                pedidos con descuento ≥ 30% pierde dinero.
+                Sales y Profit tienen la relación más fuerte: a mayor venta, mayor ganancia. Con
+                Quantity la relación es débil, y con Discount casi no hay relación lineal.
               </>
             }
           >
@@ -407,7 +396,7 @@ function Index() {
 
           <Card
             className="col-span-12 lg:col-span-4"
-            title="Factor que explica log(Sales) · η²"
+            title="Qué factor explica más las ventas"
             onAsk={() =>
               ask(
                 "Explica qué factor (categoría, región o segmento) explica más el nivel de ventas y cómo interpretar el η².",
@@ -415,10 +404,9 @@ function Index() {
             }
             insight={
               <>
-                <b>{DIM_LABEL[factors[0]!.k]}</b> explica el {fmtPct(factors[0]!.v)} de la variación
-                de log(Sales), frente a {fmtPct(factors[1]!.v)} de{" "}
-                {DIM_LABEL[factors[1]!.k].toLowerCase()} y {fmtPct(factors[2]!.v)} de{" "}
-                {DIM_LABEL[factors[2]!.k].toLowerCase()}.
+                <b>{DIM_LABEL[factors[0]!.k]}</b> es el factor que más explica el valor de los pedidos,
+                mientras que {DIM_LABEL[factors[1]!.k].toLowerCase()} y{" "}
+                {DIM_LABEL[factors[2]!.k].toLowerCase()} muestran diferencias más leves.
               </>
             }
           >
@@ -461,23 +449,23 @@ function Index() {
         </div>
 
         <h2 className="mb-3 mt-8 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
-          Qué debería priorizar el negocio
+          Conclusión
         </h2>
         <Insight
           n="→"
-          q="Recomendación con base en los datos"
+          q="Lo que muestran los gráficos en conjunto"
           onAsk={() =>
             ask(
-              "Con base en los datos, ¿qué 3 acciones concretas recomiendas priorizar para aumentar ventas y beneficio?",
+              "Resume qué factor explica más el nivel de ventas según los gráficos del dashboard.",
             )
           }
           wide
         >
-          <b>{lowMargin?.name}</b> tiene el margen más bajo ({fmtPct(lowMargin?.margin ?? 0)}) y{" "}
-          <b>{worstReg?.name}</b> es la región menos rentable ({fmtPct(worstReg?.margin ?? 0)},
-          descuento medio {fmtPct(worstReg?.meanDiscount ?? 0, 0)}). <b>{topReg?.name}</b> lidera en
-          beneficio ({fmtMoney(topReg?.totalProfit ?? 0)}): controlar descuentos altos y replicar lo
-          que funciona allí es la palanca más clara.
+          Las ventas tienen una distribución muy sesgada hacia valores bajos, con pocos pedidos de alto
+          valor. La <b>categoría</b> es el factor que más explica diferencias en el valor de venta:
+          Technology y Furniture tienen pedidos más grandes, mientras que Office Supplies domina en
+          volumen con pedidos de menor valor. <b>Región</b> y <b>segmento</b> muestran diferencias más
+          leves, y el <b>descuento</b> no se relaciona linealmente con las ventas.
         </Insight>
       </main>
 
