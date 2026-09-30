@@ -91,9 +91,9 @@ def _univariado(df):
                 _graph(_hist_log(df, "pink")),
                 insight("Al aplicar el logaritmo, la distribución se vuelve más simétrica y manejable. La "
                         "mayor concentración de observaciones se encuentra aproximadamente entre "
-                        "log(Sales) = 2.7 y 3.7, donde la densidad alcanza un máximo cercano a 0.24. "
-                        "Posteriormente, la densidad disminuye progresivamente a medida que aumentan los "
-                        "valores de log(Sales), mostrando una menor concentración de ventas altas."),
+                        "log(Sales) = 2.5 y 4, donde está el máximo de la densidad. Hacia la derecha "
+                        "aparece un segundo abultamiento, alrededor de 5, que corresponde a pedidos de "
+                        "mayor valor; más adelante se ve que coincide con Furniture y Technology."),
             ], "pink"), lg=6, className="mb-3"),
         ]),
         dbc.Row([
@@ -220,25 +220,27 @@ def _bivariado(df):
         dbc.Row([
             dbc.Col(soft_card("Boxplot: Sales por categoría", [
                 _graph(_box_raw(df, "Category", "Categoría")),
-                insight("Technology muestra el rango de ventas más alto, con ventas que llegan hasta cerca "
-                        "de $10000. Office Supplies tiene un rango menor pero con mayor concentración de "
-                        "pedidos alrededor de $5000. Furniture es la categoría con menor dispersión y "
-                        "menores valores de venta entre las tres."),
+                insight("En escala original las cajas quedan aplastadas por los valores atípicos, por eso el "
+                        "gráfico muestra sobre todo los extremos. Technology tiene los pedidos más grandes, "
+                        "con algunos que superan los $20000. Office Supplies tiene la caja más baja: la "
+                        "mayoría de sus pedidos son de poco valor, aunque unos pocos se acercan a $10000. "
+                        "Furniture tiene el rango más corto, pero su caja está a la altura de la de "
+                        "Technology, así que sus pedidos típicos no son de menor valor."),
             ], "lavender"), lg=6, className="mb-3"),
             dbc.Col(soft_card("Boxplot: log(Sales) por categoría", [
                 _graph(_box_log(df, "Category", "Categoría")),
                 insight(["Furniture (5.205) con la mediana mas alta junto con Technology (5.113). Office "
                          "Supplies queda muy por debajo (3.311), casi 2 puntos log menos que las otras dos.",
                          html.Br(),
-                         "Technology (1.886), seguida muy de cerca por Office Supplies (1.916). Furniture es "
-                         "la que tiene la caja más ancha/dispersa (2.224)."]),
+                         "En el ancho de la caja (RIC), Technology (1.886) y Office Supplies (1.916) son muy "
+                         "parecidas, y Furniture es la que tiene la caja más ancha/dispersa (2.224)."]),
             ], "blue"), lg=6, className="mb-3"),
         ]),
         dbc.Row([
             dbc.Col(soft_card("Boxplot: Sales por región", [
                 _graph(_box_raw(df, "Region", "Región")),
-                insight("East y Central muestran los rangos de venta más altos (hasta ~5000 y ~4400 "
-                        "respectivamente), y South se mantiene en niveles similares. A diferencia de "
+                insight("Las cajas de las cuatro regiones son casi iguales; lo que cambia son los valores "
+                        "atípicos, con pedidos puntuales muy grandes en South y Central. A diferencia de "
                         "Category, las diferencias entre regiones son menos marcadas."),
             ], "peach"), lg=6, className="mb-3"),
             dbc.Col(soft_card("Boxplot: Sales por segmento", [
@@ -254,15 +256,16 @@ def _bivariado(df):
         dbc.Row([
             dbc.Col(soft_card("Pedidos por categoría y región", [
                 _graph(_burbuja(df)),
-                insight("Office Supplies tiene los círculos más grandes (mayor frecuencia de pedidos, ~1000) "
-                        "especialmente en West y East. Furniture tiene círculos intermedios (~500) en West y "
-                        "Central. Technology presenta los círculos más pequeños en todas las regiones, "
-                        "coherente con ser la categoría de menor volumen de pedidos."),
+                insight("Office Supplies tiene los círculos más grandes en todas las regiones, sobre todo en "
+                        "West y East. Furniture tiene círculos intermedios, algo mayores en West y East. "
+                        "Technology presenta los círculos más pequeños en todas las regiones, coherente con "
+                        "ser la categoría de menor volumen de pedidos."),
             ], "lavender"), lg=6, className="mb-3"),
             dbc.Col(soft_card("Bins 2D: Discount vs. Sales", [
                 _graph(_bins2d(df)),
                 insight("La mayoría de los pedidos se concentra en descuentos bajos (0.0-0.2), y las celdas "
-                        "con montos de venta más altos aparecen dispersas en varios niveles de descuento."),
+                        "con montos de venta más altos aparecen dispersas en varios niveles de descuento. Con "
+                        "los descuentos más altos (0.6 a 0.8) los pedidos tienden a ser de menor valor."),
             ], "yellow"), lg=6, className="mb-3"),
         ]),
         dbc.Row([
@@ -286,34 +289,34 @@ def _tiempo(df):
         dbc.Row([
             dbc.Col(soft_card("Evolución mensual de ventas", [
                 _graph(fig_mensual),
-                insight("Los puntos se mantienen relativamente parejos mes a mes, sin un mes que se dispare "
-                        "notablemente por encima de los demás — no hay un pico estacional extremo visible a "
-                        "simple vista en la dispersión cruda."),
+                insight("Los puntos muestran un patrón que se repite cada año: las ventas son bajas a "
+                        "comienzos de año y suben hacia el final, con los meses más altos en septiembre, "
+                        "noviembre y diciembre. Es decir, las ventas tienen un comportamiento estacional."),
             ], "pink"), lg=6, className="mb-3"),
             dbc.Col(soft_card("Tendencia de ventas en el tiempo (loess)", [
                 _graph(_tendencia_loess(t_mensual)),
                 insight("Usamos la curva loess para visualizar la tendencia general. La línea de tendencia "
-                        "muestra una forma ondulada a lo largo del tiempo, con una leve subida hacia 2017, lo "
-                        "que sugiere un crecimiento moderado de las ventas totales hacia el final del "
-                        "periodo, más que una tendencia lineal constante."),
+                        "se mantiene casi plana entre 2014 y 2015 y sube con claridad desde 2016, lo que "
+                        "indica que las ventas totales crecieron en la segunda mitad del periodo, más que "
+                        "una tendencia lineal constante."),
             ], "blue"), lg=6, className="mb-3"),
         ]),
         dbc.Row([
             dbc.Col(soft_card("Tendencia de ventas por categoría", [
                 _graph(_tendencia_categoria(df)),
-                insight("Technology es la categoría que muestra mayor crecimiento en el tiempo respecto a "
-                        "Furniture y Office Supplies, que se mantienen más estables. Esto es coherente con lo "
-                        "visto antes: Technology tiene menos pedidos pero de mayor valor, y ese valor por "
-                        "pedido parece ir en aumento. Technology presenta picos donde sobresale claramente "
-                        "por encima de las otras dos categorías, reforzando que es la que más impulsa el "
-                        "crecimiento."),
+                insight("Las tres categorías crecen hacia el final del periodo, y Technology se mantiene casi "
+                        "siempre por encima de las otras dos. Esto es coherente con lo visto antes: "
+                        "Technology tiene menos pedidos pero de mayor valor. Su crecimiento viene sobre todo "
+                        "de vender más pedidos, más que de pedidos cada vez más caros. Technology presenta "
+                        "picos donde sobresale claramente por encima de las otras dos categorías, reforzando "
+                        "que es la categoría con mayor nivel de ventas."),
             ], "lavender"), md=12, className="mb-3"),
         ]),
         dbc.Row([
             dbc.Col(soft_card("Tendencia de ventas por región (facetas)", [
                 _graph(_facetas_region(df)),
-                insight("West se tiene mayor estabilidad y niveles de venta ligeramente más altos en "
-                        "comparación de las demás a lo largo del tiempo."),
+                insight("West tiene mayor estabilidad y niveles de venta ligeramente más altos en "
+                        "comparación con las demás a lo largo del tiempo."),
             ], "green"), md=12, className="mb-3"),
         ]),
     ])
