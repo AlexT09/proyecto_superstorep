@@ -230,7 +230,7 @@ def _bivariado(df):
                          "Supplies queda muy por debajo (3.311), casi 2 puntos log menos que las otras dos.",
                          html.Br(),
                          "En el ancho de la caja (RIC), Technology (1.886) y Office Supplies (1.916) son muy "
-                         "parecidas, y Furniture es la que tiene la caja más ancha/dispersa (2.224)."]),
+                         "parecidas, y Furniture es la que tiene la caja más ancha/dispersa (2.225)."]),
             ], "blue"), lg=6, className="mb-3"),
         ]),
         dbc.Row([
