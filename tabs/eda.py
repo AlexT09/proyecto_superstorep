@@ -5,9 +5,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 from dash import dcc, html
 
-from common import (ACCENT, BRAND_DARK, BRAND_DARKER, CATEGORY_ACCENT, CATEGORY_COLORS,
-                    COLORWAY, MARK, PASTEL, TEXT, insight, load_data, page_header, soft_card,
-                    style_fig)
+from common import (ACCENT, BRAND_DARK, BRAND_DARKER, BRAND_LIGHT, CATEGORY_ACCENT, CATEGORY_COLORS,
+                    COLORWAY, MARK, PASTEL, STATE_ABBR, TEXT, insight, load_data, page_header,
+                    soft_card, style_fig)
 
 CFG = {"displayModeBar": False}
 MONO_SCALE = [[0, "#FFFFFF"], [0.5, PASTEL["yellow"]], [1, BRAND_DARKER]]
@@ -67,6 +67,22 @@ def _barras(df, col, xlabel, color):
     return style_fig(fig, 320)
 
 
+def _mapa_estados(df):
+    """Mapa coroplético de pedidos por estado (go.Choropleth con locationmode='USA-states')."""
+    t = df.groupby(["State", "Region"]).size().reset_index(name="n")
+    fig = go.Figure(go.Choropleth(
+        locations=t.State.map(STATE_ABBR), z=t.n, locationmode="USA-states",
+        colorscale=[[0, BRAND_LIGHT], [1, BRAND_DARKER]], colorbar_title="Pedidos",
+        customdata=t[["State", "Region"]],
+        hovertemplate="<b>%{customdata[0]}</b> (%{customdata[1]})<br>%{z:,} pedidos<extra></extra>",
+        marker_line_color="white",
+    ))
+    fig.update_layout(geo=dict(scope="usa", bgcolor="rgba(0,0,0,0)"))
+    style_fig(fig, 420)
+    fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
+    return fig
+
+
 def _univariado(df):
     return html.Div([
         html.H4("1 · Análisis univariado", className="section-title"),
@@ -108,6 +124,15 @@ def _univariado(df):
                 insight("West tiene mayor numero de pedidos con 3203 pedidos, seguida de East con 2848. "
                         "Central con 2323 y South con menor numero de pedidos con 1620."),
             ], "green"), lg=6, className="mb-3"),
+        ]),
+        dbc.Row([
+            dbc.Col(soft_card("Mapa: pedidos por estado", [
+                _graph(_mapa_estados(df)),
+                insight("Los pedidos se concentran en pocos estados: California (2001), New York (1128) y "
+                        "Texas (985) suman el 41.2% del total, y son los estados con más pedidos de West, East "
+                        "y Central. Esto explica por qué West y East lideran en número de pedidos. En el otro "
+                        "extremo, varios estados tienen menos de 10 pedidos (p. ej. Wyoming con 1)."),
+            ], "blue"), md=12, className="mb-3"),
         ]),
     ])
 

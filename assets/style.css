@@ -9,7 +9,7 @@
   --shadow: 0 2px 10px rgba(31,85,112,.07);
   --shadow-hover: 0 12px 28px rgba(31,85,112,.16);
 
-  /* un único color de marca (azul petróleo) para todo el dashboard */
+  /* un único color de marca (azul petróleo) para toda la app */
   --brand: #2E6F95;
   --brand-dark: #1F5570;
   --brand-darker: #153B4E;
@@ -38,16 +38,8 @@ body { background:#F5F7FA; font-family:'Nunito','Segoe UI',sans-serif; color:var
 .soft-card-header { background:transparent; font-weight:800; border:none; border-bottom:1px solid var(--line); color:var(--ink); padding:.75rem 1.1rem; font-size:.95rem; }
 .soft-card .card-body { padding:1.1rem; }
 
-/* todas las tarjetas usan el mismo acento — un solo color en todo el dashboard */
+/* todas las tarjetas usan el mismo acento — un solo color en toda la app */
 .accent-blue, .accent-pink, .accent-green, .accent-peach, .accent-lavender, .accent-yellow { border-left-color: var(--brand); }
-
-/* -------- KPI: mismo lenguaje visual, el número lleva el color de marca -------- */
-.kpi-card { background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--brand); border-radius:12px; box-shadow:var(--shadow); transition:box-shadow .25s ease, transform .25s ease; }
-.kpi-card:hover { box-shadow:var(--shadow-hover); transform:translateY(-3px); }
-.kpi-label { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
-.kpi-value { font-size:1.9rem; font-weight:800; color:var(--brand-dark); line-height:1.25; transition:color .2s ease; }
-.kpi-hint { font-size:.78rem; color:var(--muted); }
-.kpi-card:hover .kpi-value { color:var(--brand); }
 
 .section-title { font-weight:800; color:var(--ink); margin:32px 0 14px; padding-left:12px; border-left:4px solid var(--brand); font-size:1.05rem; }
 .section-title:first-of-type { margin-top:4px; }
@@ -66,23 +58,13 @@ code { background:#F0F1F7; color:var(--brand-dark); border-radius:5px; padding:.
 
 .js-plotly-plot .plotly .modebar { display:none; }
 
-/* -------- filtros interactivos (pestaña Resultados) -------- */
-.filter-bar { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px 20px 8px; box-shadow:var(--shadow); }
-.filter-label { display:block; font-size:.73rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px; }
-.filter-check { display:flex; flex-wrap:wrap; gap:8px; }
-.filter-check-label { display:inline-flex; align-items:center; padding:.4rem .9rem; border-radius:999px; border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); font-weight:700; font-size:.83rem; cursor:pointer; transition:all .18s ease; user-select:none; }
-.filter-check-label:hover { border-color:var(--brand); color:var(--brand-dark); transform:translateY(-1px); }
-.filter-check-label:has(.filter-check-input:checked) { background:var(--brand); border-color:var(--brand); color:#fff; box-shadow:0 4px 10px rgba(46,111,149,.3); }
-.filter-check-input { margin-right:.35rem; accent-color:var(--brand); cursor:pointer; }
-.filter-note { background:var(--brand-light); border:1px solid #D3E6EE; color:var(--brand-dark); border-radius:10px; font-size:.85rem; padding:.7rem 1.1rem; }
-
 /* -------- animaciones e interacción de alto nivel -------- */
 @keyframes fadeSlideIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .fade-in { animation:fadeSlideIn .4s cubic-bezier(.2,.8,.2,1); }
-.fade-in .soft-card, .fade-in .kpi-card { animation:fadeSlideIn .5s cubic-bezier(.2,.8,.2,1) both; }
-.fade-in .row:nth-of-type(2) .soft-card, .fade-in .row:nth-of-type(2) .kpi-card { animation-delay:.05s; }
-.fade-in .row:nth-of-type(3) .soft-card, .fade-in .row:nth-of-type(3) .kpi-card { animation-delay:.1s; }
-.fade-in .row:nth-of-type(4) .soft-card, .fade-in .row:nth-of-type(4) .kpi-card { animation-delay:.15s; }
+.fade-in .soft-card { animation:fadeSlideIn .5s cubic-bezier(.2,.8,.2,1) both; }
+.fade-in .row:nth-of-type(2) .soft-card { animation-delay:.05s; }
+.fade-in .row:nth-of-type(3) .soft-card { animation-delay:.1s; }
+.fade-in .row:nth-of-type(4) .soft-card { animation-delay:.15s; }
 
 .js-plotly-plot { transition:opacity .2s ease; }
 

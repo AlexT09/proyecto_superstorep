@@ -28,16 +28,13 @@ Después abre **http://127.0.0.1:8050** en el navegador.
 incrusta en `dashboard/template.html`. El resultado es `assets/dashboard.html`: un solo archivo que
 se abre en cualquier navegador sin servidor, así que también sirve para compartirlo por separado.
 
-Incluye:
+Resume los resultados del EDA según los objetivos del proyecto:
 
 - **Filtros** por categoría, región, segmento y año que actualizan todo el dashboard.
-- **KPIs:** ventas totales, pedidos, venta media por línea (y mediana) y margen de ganancia.
-- **¿Qué factor explica más el valor de venta?:** η² (ANOVA de una vía sobre log(Sales)) para
-  categoría, región y segmento, con una lectura automática según los filtros.
-- Valor de venta por categoría, región y segmento (media, mediana o total), distribución por
-  categoría (boxplot en escala log), tendencia mensual, mapa de calor región × categoría y
-  venta media por tramo de descuento.
-- Tabla por subcategoría, ordenable.
+- **KPIs:** pedidos, media, mediana y máximo de `Sales` (resumen estadístico del EDA).
+- **Hallazgos del EDA** (los de las secciones EDA y Conclusiones).
+- Distribución de `Sales`, pedidos y `Sales` por categoría, región y segmento, correlación entre
+  variables numéricas y ventas mensuales por categoría.
 
 Para regenerarlo (por ejemplo, después de cambiar los datos):
 

@@ -23,7 +23,7 @@ __PLOTLY__
   header.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
   header.top h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -.01em; }
   header.top p { color: var(--muted); font-size: .92rem; }
-  header.top .period { font-size: .8rem; color: var(--muted); text-align: right; }
+  header.top .period { font-size: .8rem; color: var(--muted); }
 
   .filters { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; background: var(--card); border: 1px solid var(--line);
              border-radius: var(--radius); padding: 12px 16px; box-shadow: var(--shadow); margin-bottom: var(--gap); position: sticky; top: 0; z-index: 5; }
@@ -35,56 +35,32 @@ __PLOTLY__
   .btn-reset { margin-left: auto; padding: 7px 14px; border: 1px solid #D5D8E3; border-radius: 8px; background: #fff; color: var(--ink-soft);
                font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; }
   .btn-reset:hover { background: var(--brand-light); color: var(--brand-dark); }
-  .active-note { font-size: .8rem; color: var(--brand-dark); font-weight: 700; width: 100%; display: none; }
 
   .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--gap); margin-bottom: var(--gap); }
   .kpi { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 14px 18px; box-shadow: var(--shadow); }
   .kpi .label { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
   .kpi .value { font-size: 1.7rem; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-  .kpi .hint { font-size: .8rem; color: var(--ink-soft); }
 
   .grid { display: grid; gap: var(--gap); margin-bottom: var(--gap); }
   .g-2 { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
   .g-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-  .g-hero { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; min-width: 0; }
-  .card h2 { font-size: .98rem; font-weight: 800; margin-bottom: 2px; }
-  .card .sub { font-size: .8rem; color: var(--muted); margin-bottom: 6px; }
-  .section-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 10px; }
-  .section-title h2 { font-size: 1.05rem; font-weight: 800; }
-  .section-title .sub { font-size: .82rem; color: var(--muted); }
+  .card h2 { font-size: .98rem; font-weight: 800; margin-bottom: 6px; }
+  .map-card { margin-bottom: var(--gap); }
 
-  .reading { font-size: .92rem; color: var(--ink); }
-  .reading p + p { margin-top: 8px; }
-  .reading b { color: var(--brand-dark); }
-  .reading .note { font-size: .8rem; color: var(--muted); }
-
-  .seg-toggle { display: inline-flex; border: 1px solid #D5D8E3; border-radius: 9px; overflow: hidden; background: #fff; }
-  .seg-toggle button { border: none; background: transparent; padding: 6px 12px; font: inherit; font-size: .82rem; font-weight: 700; color: var(--ink-soft); cursor: pointer; }
-  .seg-toggle button + button { border-left: 1px solid #D5D8E3; }
-  .seg-toggle button[aria-pressed="true"] { background: var(--brand); color: #fff; }
-
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: .86rem; font-variant-numeric: tabular-nums; }
-  thead th { text-align: left; padding: 9px 10px; border-bottom: 2px solid var(--line); color: var(--muted); font-size: .72rem; font-weight: 800;
-             text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; cursor: pointer; user-select: none; }
-  thead th.num, td.num { text-align: right; }
-  thead th:hover { color: var(--ink); }
-  tbody td { padding: 8px 10px; border-bottom: 1px solid #F1F2F7; white-space: nowrap; }
-  tbody tr:hover { background: #F8FAFC; }
-  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: baseline; }
-  td.neg { color: #B3261E; }
+  .findings ul { padding-left: 18px; font-size: .9rem; }
+  .findings li + li { margin-top: 8px; }
+  .findings code { color: var(--brand-dark); font-weight: 700; }
 
   footer { font-size: .78rem; color: var(--muted); padding: 6px 2px 18px; }
 
-  @media (max-width: 900px) { .g-hero { grid-template-columns: 1fr; } }
   @media (max-width: 560px) {
     .g-2 { grid-template-columns: 1fr; }
     .filter-group select { min-width: 0; width: 100%; }
     .filter-group { flex: 1 1 45%; }
     .btn-reset { margin-left: 0; }
   }
-  @media print { .filters { position: static; } .btn-reset, .seg-toggle { display: none; } .card, .kpi { break-inside: avoid; box-shadow: none; } }
+  @media print { .filters { position: static; } .btn-reset { display: none; } .card, .kpi { break-inside: avoid; box-shadow: none; } }
 </style>
 </head>
 <body>
@@ -94,7 +70,7 @@ __PLOTLY__
       <h1>Dashboard de ventas · Sample Superstore</h1>
       <p>¿Qué factores (categoría, región, segmento) explican el nivel de ventas (<code>Sales</code>)?</p>
     </div>
-    <div class="period">Periodo de pedidos: __PERIODO__<br>9,994 líneas de pedido · EE. UU.</div>
+    <div class="period">Periodo: __PERIODO__</div>
   </header>
 
   <section class="filters" aria-label="Filtros">
@@ -107,73 +83,57 @@ __PLOTLY__
     <div class="filter-group"><label for="f-year">Año</label>
       <select id="f-year"><option value="all">Todos</option>__YEARS__</select></div>
     <button class="btn-reset" id="btn-reset" type="button">Limpiar filtros</button>
-    <div class="active-note" id="active-note"></div>
   </section>
 
-  <section class="kpi-row" aria-label="Indicadores">
-    <div class="kpi"><div class="label">Ventas totales</div><div class="value" id="k-sales">–</div><div class="hint" id="k-sales-h"></div></div>
-    <div class="kpi"><div class="label">Pedidos</div><div class="value" id="k-orders">–</div><div class="hint" id="k-orders-h"></div></div>
-    <div class="kpi"><div class="label">Venta media por línea</div><div class="value" id="k-mean">–</div><div class="hint" id="k-mean-h"></div></div>
-    <div class="kpi"><div class="label">Margen de ganancia</div><div class="value" id="k-margin">–</div><div class="hint" id="k-margin-h"></div></div>
+  <section class="kpi-row" aria-label="Resumen de Sales">
+    <div class="kpi"><div class="label">Pedidos</div><div class="value" id="k-n">–</div></div>
+    <div class="kpi"><div class="label">Media de Sales</div><div class="value" id="k-mean">–</div></div>
+    <div class="kpi"><div class="label">Mediana de Sales</div><div class="value" id="k-median">–</div></div>
+    <div class="kpi"><div class="label">Máximo de Sales</div><div class="value" id="k-max">–</div></div>
   </section>
 
-  <section class="grid g-hero">
-    <div class="card">
-      <h2>¿Qué factor explica más el valor de venta?</h2>
-      <div class="sub">Porcentaje de la varianza de log(Sales) que explica cada variable (η², ANOVA de una vía)</div>
-      <div id="fig-eta"></div>
+  <section class="grid g-2">
+    <div class="card findings">
+      <h2>Hallazgos del EDA</h2>
+      <ul>
+        <li>El análisis univariado muestra que <code>Sales</code> tiene una distribución muy sesgada hacia valores
+          bajos, con pocos pedidos de alto valor.</li>
+        <li>El análisis bivariado indica que <code>Category</code> es el factor que más explica diferencias en el
+          valor de venta — Technology y Furniture tienen pedidos individuales más grandes, mientras que Office
+          Supplies domina en volumen pero con pedidos de menor valor.</li>
+        <li><code>Region</code> y <code>Segment</code> muestran diferencias más leves.</li>
+        <li>El descuento no se relaciona linealmente con las ventas, como se observa en el gráfico de bins 2D.</li>
+        <li>Los puntos muestran un patrón que se repite cada año: las ventas son más bajas a comienzos de año y suben
+          hacia el final, lo que sugiere un comportamiento estacional.</li>
+        <li>Los pedidos se concentran en pocos estados: California (2001), New York (1128) y Texas (985) suman el
+          41.2% del total, y son los estados con más pedidos de West, East y Central.</li>
+      </ul>
     </div>
-    <div class="card reading" id="reading" aria-live="polite"></div>
+    <div class="card"><h2>Distribución de Sales</h2><div id="fig-hist"></div></div>
   </section>
 
-  <div class="section-title">
-    <div><h2>Valor de venta por factor</h2><div class="sub" id="metric-sub">Venta media por línea de pedido</div></div>
-    <div class="seg-toggle" role="group" aria-label="Métrica">
-      <button type="button" data-metric="mean" aria-pressed="true">Media por línea</button>
-      <button type="button" data-metric="median" aria-pressed="false">Mediana por línea</button>
-      <button type="button" data-metric="sum" aria-pressed="false">Ventas totales</button>
-    </div>
-  </div>
   <section class="grid g-3">
-    <div class="card"><h2>Categoría</h2><div id="fig-cat"></div></div>
-    <div class="card"><h2>Región</h2><div id="fig-reg"></div></div>
-    <div class="card"><h2>Segmento</h2><div id="fig-seg"></div></div>
+    <div class="card"><h2>Pedidos por categoría</h2><div id="fig-n-cat"></div></div>
+    <div class="card"><h2>Pedidos por región</h2><div id="fig-n-reg"></div></div>
+    <div class="card"><h2>Pedidos por segmento</h2><div id="fig-n-seg"></div></div>
+  </section>
+
+  <section class="card map-card">
+    <h2>Pedidos por estado</h2><div id="fig-map"></div>
+  </section>
+
+  <section class="grid g-3">
+    <div class="card"><h2>Sales por categoría</h2><div id="fig-box-cat"></div></div>
+    <div class="card"><h2>Sales por región</h2><div id="fig-box-reg"></div></div>
+    <div class="card"><h2>Sales por segmento</h2><div id="fig-box-seg"></div></div>
   </section>
 
   <section class="grid g-2">
-    <div class="card">
-      <h2>Distribución de la venta por línea, por categoría</h2>
-      <div class="sub">Caja = rango intercuartílico · línea = mediana · trazo discontinuo = media · escala log</div>
-      <div id="fig-box"></div>
-    </div>
-    <div class="card">
-      <h2>Tendencia mensual de ventas por categoría</h2>
-      <div class="sub">Suma de Sales por mes de pedido</div>
-      <div id="fig-trend"></div>
-    </div>
+    <div class="card"><h2>Correlación entre variables numéricas</h2><div id="fig-corr"></div></div>
+    <div class="card"><h2>Ventas mensuales por categoría</h2><div id="fig-trend"></div></div>
   </section>
 
-  <section class="grid g-2">
-    <div class="card">
-      <h2>Venta media por línea: región × categoría</h2>
-      <div class="sub">Más oscuro = mayor valor medio por línea de pedido</div>
-      <div id="fig-heat"></div>
-    </div>
-    <div class="card">
-      <h2>Venta media por línea según el descuento</h2>
-      <div class="sub">Pasa el cursor para ver el margen de ganancia de cada tramo</div>
-      <div id="fig-disc"></div>
-    </div>
-  </section>
-
-  <section class="card" style="margin-bottom: var(--gap)">
-    <h2>Detalle por subcategoría</h2>
-    <div class="sub">Haz clic en un encabezado para ordenar</div>
-    <div class="table-wrap"><table id="tbl"></table></div>
-  </section>
-
-  <footer>Fuente: Sample Superstore (Kaggle/Tableau), dataset transformado del proyecto. Generado con Python + Plotly
-    (dashboard/build_dashboard.py). Proyecto: Alex Teran y David Estrada.</footer>
+  <footer>Fuente: Sample Superstore. Proyecto: Alex Teran y David Estrada.</footer>
 </div>
 
 <script id="figs" type="application/json">__FIGS__</script>
@@ -182,20 +142,24 @@ __PLOTLY__
 (() => {
   const FIGS = JSON.parse(document.getElementById('figs').textContent);
   const D = JSON.parse(document.getElementById('data').textContent);
-  const N = D.sales.length;
-  const LOG = D.sales.map(Math.log);
+  const N = D.Sales.length;
   const YEAR = D.months.map(m => m.slice(0, 4));
   const CONFIG = { displayModeBar: false, responsive: true };
-  const METRIC_LABEL = { mean: 'Venta media por línea de pedido', median: 'Venta mediana por línea de pedido', sum: 'Ventas totales (suma de Sales)' };
-  const state = { cat: -1, reg: -1, seg: -1, year: 'all', metric: 'mean', sortKey: 'sum', sortDir: -1 };
+  const state = { cat: -1, reg: -1, seg: -1, year: 'all' };
 
-  // ---------- formato
-  const fmtMoney = v => v >= 1e6 ? `$${(v / 1e6).toFixed(2)}M` : v >= 1e4 ? `$${Math.round(v / 1e3)}K` : `$${Math.round(v).toLocaleString('en-US')}`;
   const fmtInt = v => v.toLocaleString('en-US');
-  const fmtPct = v => `${v.toFixed(1)} %`;
-  const fmtUSD2 = v => `${v < 0 ? '-' : ''}$${Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const fmtUSD = v => `$${v.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`;
+  const median = arr => {
+    const a = Float64Array.from(arr).sort(), h = a.length >> 1;
+    return a.length % 2 ? a[h] : (a[h - 1] + a[h]) / 2;
+  };
+  const pearson = (x, y) => {
+    const n = x.length, mx = x.reduce((a, b) => a + b, 0) / n, my = y.reduce((a, b) => a + b, 0) / n;
+    let sxy = 0, sxx = 0, syy = 0;
+    for (let i = 0; i < n; i++) { const dx = x[i] - mx, dy = y[i] - my; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
+    return sxx && syy ? sxy / Math.sqrt(sxx * syy) : null;
+  };
 
-  // ---------- agregación
   const filtered = () => {
     const out = [];
     for (let i = 0; i < N; i++) {
@@ -207,189 +171,85 @@ __PLOTLY__
     }
     return out;
   };
-  const median = arr => {
-    if (!arr.length) return NaN;
-    const a = Float64Array.from(arr).sort(), h = a.length >> 1;
-    return a.length % 2 ? a[h] : (a[h - 1] + a[h]) / 2;
-  };
-  // grupos por un arreglo de índices (D.c, D.r, ...) -> [{n, sum, profit, vals}]
-  const groupBy = (rows, key, k) => {
-    const g = Array.from({ length: k }, () => ({ n: 0, sum: 0, profit: 0, vals: [] }));
-    for (const i of rows) { const x = g[key[i]]; x.n++; x.sum += D.sales[i]; x.profit += D.profit[i]; x.vals.push(D.sales[i]); }
-    return g;
-  };
-  const metricOf = (x, kind) => kind === 'sum' ? x.sum : kind === 'median' ? median(x.vals) : x.sum / x.n;
-  const etaSquared = (rows, key, k) => {
-    const n = new Array(k).fill(0), s = new Array(k).fill(0);
-    let tot = 0;
-    for (const i of rows) { n[key[i]]++; s[key[i]] += LOG[i]; tot += LOG[i]; }
-    if (n.filter(v => v > 0).length < 2) return NaN;
-    const mean = tot / rows.length;
-    let sst = 0, ssb = 0;
-    for (const i of rows) sst += (LOG[i] - mean) ** 2;
-    for (let j = 0; j < k; j++) if (n[j]) ssb += n[j] * (s[j] / n[j] - mean) ** 2;
-    return sst ? ssb / sst : NaN;
-  };
-  const discIdx = d => D.discBins.findIndex(([, lo, hi]) => d > lo && d <= hi);
 
-  // ---------- figuras (se reutiliza el layout/estilo generado en Python, solo cambian los datos)
-  const draw = (id, fig) => Plotly.react(id, fig.data, fig.layout, CONFIG);
-  const initFigures = () => Object.entries(FIGS).forEach(([id, f]) => Plotly.newPlot(id, f.data, f.layout, CONFIG));
+  // Las figuras conservan el estilo generado en Python; los filtros solo reemplazan sus datos.
+  const draw = id => Plotly.react(id, FIGS[id].data, FIGS[id].layout, CONFIG);
 
-  function updateEta(rows) {
-    const f = FIGS['fig-eta'];
-    const v = [[D.c, 3], [D.r, 4], [D.s, 3]].map(([key, k]) => etaSquared(rows, key, k) * 100);
-    f.data[0].x = v.map(x => isNaN(x) ? 0 : x);
-    f.data[0].text = v.map(x => isNaN(x) ? 'filtrado' : fmtPct(x));
-    draw('fig-eta', f);
-    return v;
+  function updateKPIs(rows) {
+    const v = rows.map(i => D.Sales[i]);
+    const set = (id, txt) => { document.getElementById(id).textContent = txt; };
+    set('k-n', fmtInt(rows.length));
+    set('k-mean', v.length ? fmtUSD(v.reduce((a, b) => a + b, 0) / v.length) : '–');
+    set('k-median', v.length ? fmtUSD(median(v)) : '–');
+    set('k-max', v.length ? fmtUSD(Math.max(...v)) : '–');
   }
 
-  function updateFactor(id, rows, key, labels, colors) {
-    const f = FIGS[id], g = groupBy(rows, key, labels.length);
-    const keep = g.map((x, j) => j).filter(j => g[j].n > 0);
-    const y = keep.map(j => metricOf(g[j], state.metric));
-    Object.assign(f.data[0], {
-      x: keep.map(j => labels[j]), y, text: y.map(fmtMoney), customdata: keep.map(j => g[j].n),
-      marker: { ...f.data[0].marker, color: colors ? keep.map(j => colors[j]) : D.brand },
-    });
-    draw(id, f);
+  function updateHist(rows) {
+    FIGS['fig-hist'].data[0].x = rows.map(i => D.Sales[i]).filter(v => v <= D.histMax);
+    draw('fig-hist');
+  }
+
+  function updateCount(id, rows, key, k) {
+    const n = new Array(k).fill(0);
+    for (const i of rows) n[key[i]]++;
+    const t = FIGS[id].data[0];
+    t.y = n;
+    t.text = n.map(v => rows.length ? `${fmtInt(v)} (${(v / rows.length * 100).toFixed(1)}%)` : '');
+    draw(id);
+  }
+
+  function updateMap(rows) {
+    const n = new Array(D.nStates).fill(0);
+    for (const i of rows) n[D.st[i]]++;
+    FIGS['fig-map'].data[0].z = n.map(v => v || null);
+    draw('fig-map');
+  }
+
+  function updateBox(id, rows, key, k) {
+    const ys = Array.from({ length: k }, () => []);
+    for (const i of rows) ys[key[i]].push(D.Sales[i]);
+    FIGS[id].data.forEach((t, j) => { t.y = ys[j]; });
+    draw(id);
+  }
+
+  function updateCorr(rows) {
+    const cols = D.numeric.map(name => rows.map(i => D[name][i]));
+    FIGS['fig-corr'].data[0].z = cols.map(a => cols.map(b => {
+      const r = pearson(a, b);
+      return r === null ? null : Math.round(r * 100) / 100;
+    }));
+    draw('fig-corr');
   }
 
   function updateTrend(rows) {
-    const f = FIGS['fig-trend'];
-    const mIdx = D.months.map((m, j) => j).filter(j => state.year === 'all' || YEAR[j] === state.year);
+    const mIdx = D.months.map((_, j) => j).filter(j => state.year === 'all' || YEAR[j] === state.year);
     const pos = new Map(mIdx.map((j, p) => [j, p]));
     const sums = D.cats.map(() => new Array(mIdx.length).fill(0));
-    const any = D.cats.map(() => false);
-    for (const i of rows) { const p = pos.get(D.m[i]); if (p !== undefined) { sums[D.c[i]][p] += D.sales[i]; any[D.c[i]] = true; } }
-    const x = mIdx.map(j => D.months[j]);
-    f.data.forEach((t, c) => {
-      t.x = x;
-      t.y = any[c] ? sums[c].map(v => Math.round(v * 100) / 100) : x.map(() => null);
-      t.visible = any[c] ? true : 'legendonly';
+    for (const i of rows) { const p = pos.get(D.m[i]); if (p !== undefined) sums[D.c[i]][p] += D.Sales[i]; }
+    FIGS['fig-trend'].data.forEach((t, c) => {
+      t.x = mIdx.map(j => D.months[j]);
+      t.y = sums[c].map(v => Math.round(v * 100) / 100);
     });
-    draw('fig-trend', f);
+    draw('fig-trend');
   }
 
-  function updateBox(rows) {
-    const f = FIGS['fig-box'];
-    const ys = D.cats.map(() => []);
-    for (const i of rows) ys[D.c[i]].push(D.sales[i]);
-    f.data.forEach((t, c) => { t.y = ys[c]; t.visible = ys[c].length > 0; });
-    draw('fig-box', f);
-  }
-
-  function updateHeat(rows) {
-    const f = FIGS['fig-heat'];
-    const n = D.regs.map(() => D.cats.map(() => 0)), s = D.regs.map(() => D.cats.map(() => 0));
-    for (const i of rows) { n[D.r[i]][D.c[i]]++; s[D.r[i]][D.c[i]] += D.sales[i]; }
-    f.data[0].z = s.map((row, r) => row.map((v, c) => n[r][c] ? Math.round(v / n[r][c] * 10) / 10 : null));
-    draw('fig-heat', f);
-  }
-
-  function updateDisc(rows) {
-    const f = FIGS['fig-disc'], k = D.discBins.length;
-    const g = Array.from({ length: k }, () => ({ n: 0, sum: 0, profit: 0 }));
-    for (const i of rows) { const x = g[discIdx(D.disc[i])]; x.n++; x.sum += D.sales[i]; x.profit += D.profit[i]; }
-    const y = g.map(x => x.n ? x.sum / x.n : null);
-    Object.assign(f.data[0], {
-      y, text: y.map(v => v === null ? '' : fmtMoney(v)),
-      customdata: g.map(x => [x.sum ? x.profit / x.sum * 100 : null, x.n]),
-    });
-    draw('fig-disc', f);
-  }
-
-  // ---------- KPIs, lectura y tabla (HTML)
-  function renderKPIs(rows) {
-    let sales = 0, profit = 0;
-    const orders = new Set();
-    for (const i of rows) { sales += D.sales[i]; profit += D.profit[i]; orders.add(D.o[i]); }
-    const vals = rows.map(i => D.sales[i]);
-    const set = (id, v, h) => { document.getElementById(id).textContent = v; document.getElementById(id + '-h').textContent = h; };
-    set('k-sales', rows.length ? fmtMoney(sales) : '–', `${fmtInt(rows.length)} líneas de pedido`);
-    set('k-orders', fmtInt(orders.size), orders.size ? `${(rows.length / orders.size).toFixed(2)} líneas por pedido` : 'sin datos');
-    set('k-mean', rows.length ? fmtUSD2(sales / rows.length) : '–', rows.length ? `Mediana: ${fmtUSD2(median(vals))}` : '');
-    set('k-margin', sales ? fmtPct(profit / sales * 100) : '–', `Ganancia: ${fmtMoney(Math.max(profit, 0))}${profit < 0 ? ' (negativa)' : ''}`);
-  }
-
-  function renderReading(rows, eta) {
-    const el = document.getElementById('reading');
-    if (!rows.length) { el.innerHTML = '<p>No hay líneas de pedido con esta combinación de filtros.</p>'; return; }
-    const names = ['Categoría', 'Región', 'Segmento'];
-    const valid = eta.map((v, j) => [v, j]).filter(([v]) => !isNaN(v)).sort((a, b) => b[0] - a[0]);
-    const gc = groupBy(rows, D.c, 3), cats = gc.map((x, j) => [x, j]).filter(([x]) => x.n);
-    const byMedian = cats.map(([x, j]) => [median(x.vals), j]).sort((a, b) => b[0] - a[0]);
-    const byCount = cats.map(([x, j]) => [x.n, j]).sort((a, b) => b[0] - a[0]);
-    let html = '<h2 style="margin-bottom:8px">Lectura</h2>';
-    if (valid.length) {
-      const [top, j] = valid[0];
-      html += `<p><b>${names[j]}</b> es el factor que más explica el valor de venta por línea: ${fmtPct(top)} de la varianza de log(Sales)`;
-      html += valid.length > 1 ? `, frente a ${valid.slice(1).map(([v, k]) => `${names[k]} (${fmtPct(v)})`).join(' y ')}.</p>` : '.</p>';
-    } else {
-      html += '<p>Con los filtros actuales queda un solo grupo en cada factor, así que no se puede comparar cuánto explica cada uno.</p>';
-    }
-    if (byMedian.length > 1) {
-      const hi = byMedian[0], lo = byMedian[byMedian.length - 1], cnt = byCount[0];
-      html += `<p><b>${D.cats[hi[1]]}</b> tiene la mediana por línea más alta (${fmtUSD2(hi[0])}) y <b>${D.cats[lo[1]]}</b> la más baja (${fmtUSD2(lo[0])}).`;
-      html += ` ${D.cats[cnt[1]]} concentra el ${fmtPct(cnt[0] / rows.length * 100)} de las líneas.</p>`;
-    }
-    html += '<p class="note">η² mide qué parte de la variación del valor de venta (en escala log) se debe a las diferencias entre los grupos. Es descriptivo: no implica causalidad.</p>';
-    el.innerHTML = html;
-  }
-
-  const COLS = [
-    { key: 'sub', label: 'Subcategoría' }, { key: 'cat', label: 'Categoría' },
-    { key: 'n', label: 'Líneas', num: true, f: fmtInt }, { key: 'sum', label: 'Ventas', num: true, f: fmtUSD2 },
-    { key: 'mean', label: 'Venta media', num: true, f: fmtUSD2 }, { key: 'profit', label: 'Ganancia', num: true, f: fmtUSD2 },
-    { key: 'margin', label: 'Margen', num: true, f: fmtPct },
-  ];
-  let tableRows = [];
-  function renderTable(rows) {
-    if (rows) {
-      const g = groupBy(rows, D.sc, D.subs.length);
-      tableRows = g.map((x, j) => ({ x, j })).filter(({ x }) => x.n).map(({ x, j }) => ({
-        sub: D.subs[j], cat: D.cats[D.subCat[j]], catIdx: D.subCat[j], n: x.n, sum: x.sum,
-        mean: x.sum / x.n, profit: x.profit, margin: x.profit / x.sum * 100,
-      }));
-    }
-    const { sortKey: k, sortDir: d } = state;
-    tableRows.sort((a, b) => (a[k] < b[k] ? -1 : a[k] > b[k] ? 1 : 0) * d);
-    const head = COLS.map(c => {
-      const arrow = c.key === k ? (d < 0 ? ' ▼' : ' ▲') : '';
-      const sort = c.key === k ? (d < 0 ? 'descending' : 'ascending') : 'none';
-      return `<th class="${c.num ? 'num' : ''}" data-key="${c.key}" aria-sort="${sort}" tabindex="0">${c.label}${arrow}</th>`;
-    }).join('');
-    const body = tableRows.map(r => '<tr>' + COLS.map(c => {
-      if (c.key === 'cat') return `<td><span class="dot" style="background:${D.catColors[r.catIdx]}"></span>${r.cat}</td>`;
-      const neg = (c.key === 'profit' || c.key === 'margin') && r[c.key] < 0 ? ' neg' : '';
-      return `<td class="${c.num ? 'num' : ''}${neg}">${c.f ? c.f(r[c.key]) : r[c.key]}</td>`;
-    }).join('') + '</tr>').join('');
-    document.getElementById('tbl').innerHTML = `<thead><tr>${head}</tr></thead><tbody>${body}</tbody>`;
-  }
-
-  // ---------- orquestación
-  function refresh({ charts = true } = {}) {
+  function refresh(charts = true) {
     const rows = filtered();
-    const eta = charts ? updateEta(rows) : [[D.c, 3], [D.r, 4], [D.s, 3]].map(([key, k]) => etaSquared(rows, key, k) * 100);
-    if (charts) {
-      updateFactor('fig-cat', rows, D.c, D.cats, D.catColors);
-      updateFactor('fig-reg', rows, D.r, D.regs, null);
-      updateFactor('fig-seg', rows, D.s, D.segs, null);
-      updateTrend(rows); updateBox(rows); updateHeat(rows); updateDisc(rows);
-    }
-    renderKPIs(rows); renderReading(rows, eta); renderTable(rows);
-    const parts = [['cat', D.cats], ['reg', D.regs], ['seg', D.segs]].filter(([k]) => state[k] >= 0).map(([k, l]) => l[state[k]]);
-    if (state.year !== 'all') parts.push(state.year);
-    const note = document.getElementById('active-note');
-    note.style.display = parts.length ? 'block' : 'none';
-    note.textContent = parts.length ? `Filtros activos: ${parts.join(' · ')} — ${fmtInt(rows.length)} de ${fmtInt(N)} líneas` : '';
+    updateKPIs(rows);
+    if (!charts) return;
+    updateHist(rows);
+    updateCount('fig-n-cat', rows, D.c, D.cats.length);
+    updateCount('fig-n-reg', rows, D.r, D.regs.length);
+    updateCount('fig-n-seg', rows, D.s, D.segs.length);
+    updateMap(rows);
+    updateBox('fig-box-cat', rows, D.c, D.cats.length);
+    updateBox('fig-box-reg', rows, D.r, D.regs.length);
+    updateBox('fig-box-seg', rows, D.s, D.segs.length);
+    updateCorr(rows);
+    updateTrend(rows);
   }
 
-  const fill = (id, labels) => {
-    const sel = document.getElementById(id);
-    labels.forEach((l, j) => sel.add(new Option(l, j)));
-  };
+  const fill = (id, labels) => { const sel = document.getElementById(id); labels.forEach((l, j) => sel.add(new Option(l, j))); };
   fill('f-cat', D.cats); fill('f-reg', D.regs); fill('f-seg', D.segs);
   [['f-cat', 'cat'], ['f-reg', 'reg'], ['f-seg', 'seg']].forEach(([id, k]) =>
     document.getElementById(id).addEventListener('change', e => { state[k] = +e.target.value; refresh(); }));
@@ -400,30 +260,9 @@ __PLOTLY__
     document.getElementById('f-year').value = 'all';
     refresh();
   });
-  document.querySelectorAll('.seg-toggle button').forEach(b => b.addEventListener('click', () => {
-    state.metric = b.dataset.metric;
-    document.querySelectorAll('.seg-toggle button').forEach(x => x.setAttribute('aria-pressed', x === b));
-    document.getElementById('metric-sub').textContent = METRIC_LABEL[state.metric];
-    const rows = filtered();
-    updateFactor('fig-cat', rows, D.c, D.cats, D.catColors);
-    updateFactor('fig-reg', rows, D.r, D.regs, null);
-    updateFactor('fig-seg', rows, D.s, D.segs, null);
-  }));
-  const sortBy = th => {
-    const k = th.dataset.key;
-    state.sortDir = state.sortKey === k ? -state.sortDir : (k === 'sub' || k === 'cat' ? 1 : -1);
-    state.sortKey = k;
-    renderTable();
-  };
-  document.getElementById('tbl').addEventListener('click', e => { const th = e.target.closest('th'); if (th) sortBy(th); });
-  document.getElementById('tbl').addEventListener('keydown', e => {
-    const th = e.target.closest('th'); if (th && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); sortBy(th); }
-  });
 
-  // Las figuras iniciales son las que generó Python; el resto del contenido se calcula al cargar.
-  initFigures();
-  refresh({ charts: false });
-  window.__dashboard = { D, FIGS, state, filtered, etaSquared, groupBy, median, refresh };
+  Object.keys(FIGS).forEach(id => Plotly.newPlot(id, FIGS[id].data, FIGS[id].layout, CONFIG));
+  refresh(false);
 })();
 </script>
 </body>

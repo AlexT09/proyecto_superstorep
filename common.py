@@ -13,11 +13,9 @@ from dash import html
 # ---------------------------------------------------------------- rutas
 ROOT = Path(__file__).resolve().parent
 DATA_PATH = ROOT / "data" / "superstore_transformado.csv"
-MODEL_PATH = ROOT / "model" / "model.pkl"
-METRICS_PATH = ROOT / "model" / "metrics.json"
 
-# ---------------------------------------------------------------- 
-# El dashboard usa un único color de marca (azul petróleo);
+# ---------------------------------------------------------------- colores
+# Un único color de marca (azul petróleo) en distintas tintas.
 BRAND = "#2E6F95"
 BRAND_DARK = "#1F5570"
 BRAND_DARKER = "#153B4E"
@@ -53,6 +51,19 @@ CATEGORY_ACCENT = {
     "Furniture": "#63A0BC",
     "Office Supplies": "#153B4E",
     "Technology": "#1F5570",
+}
+# Código de 2 letras de cada estado, requerido por los mapas de Plotly (locationmode="USA-states")
+STATE_ABBR = {
+    "Alabama": "AL", "Arizona": "AZ", "Arkansas": "AR", "California": "CA", "Colorado": "CO",
+    "Connecticut": "CT", "Delaware": "DE", "District of Columbia": "DC", "Florida": "FL", "Georgia": "GA",
+    "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS", "Kentucky": "KY",
+    "Louisiana": "LA", "Maine": "ME", "Maryland": "MD", "Massachusetts": "MA", "Michigan": "MI",
+    "Minnesota": "MN", "Mississippi": "MS", "Missouri": "MO", "Montana": "MT", "Nebraska": "NE",
+    "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+    "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK", "Oregon": "OR",
+    "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC", "South Dakota": "SD",
+    "Tennessee": "TN", "Texas": "TX", "Utah": "UT", "Vermont": "VT", "Virginia": "VA", "Washington": "WA",
+    "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY",
 }
 
 
@@ -103,13 +114,3 @@ def insight(children):
     """Párrafo pequeño y discreto para interpretar un gráfico o dato (estilo uniforme en todo el dashboard)."""
     return html.P(children, className="insight-text")
 
-
-def kpi_card(label, value, color="blue", hint=""):
-    return dbc.Card(
-        dbc.CardBody([
-            html.Div(label, className="kpi-label"),
-            html.Div(value, className="kpi-value"),
-            html.Div(hint, className="kpi-hint"),
-        ]),
-        className=f"kpi-card accent-{color} h-100",
-    )
