@@ -42,7 +42,7 @@ def _hist_sales(df, color):
     fig = px.histogram(df[df.Sales <= 1000], x="Sales", nbins=40, color_discrete_sequence=[PASTEL[color]])
     fig.update_traces(marker_line_width=0)
     fig.update_xaxes(title="Ventas")
-    fig.update_yaxes(title="Número de pedidos")
+    fig.update_yaxes(title="Número de pedidos", title_standoff=12, automargin=True)
     return style_fig(fig, 320)
 
 
@@ -51,7 +51,7 @@ def _hist_log(df, color):
                        color_discrete_sequence=[PASTEL[color]])
     fig.update_traces(marker_line_width=0)
     fig.update_xaxes(title="Log(Ventas)")
-    fig.update_yaxes(title="Densidad")
+    fig.update_yaxes(title="Densidad", title_standoff=12, automargin=True)
     return style_fig(fig, 320)
 
 
