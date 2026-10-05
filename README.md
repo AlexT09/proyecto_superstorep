@@ -45,6 +45,16 @@ python dashboard/build_dashboard.py --offline  # incrusta plotly.js para verlo s
 
 Si `assets/dashboard.html` no existe, la pestaña Dashboard lo genera al abrirse.
 
+## Dashboard 3D (`3DWebDashboard/`)
+
+La pestaña **Dashboard** muestra `3DWebDashboard/3DWebDashboard.html`: una portada 3D (anillo de
+tarjetas con los KPIs) que abre la vista de gráficos `Dashboard Superstore.dc.html`. Esa vista lee
+las figuras y los datos de `assets/dashboard.html`, así que regenerarlo también actualiza el 3D.
+
+`app.py` sirve esta carpeta en **http://127.0.0.1:8050/3d/3DWebDashboard.html** (fuera de `assets/`
+para que Dash no cargue `support.js` en la app). Necesita servidor e internet (React, Plotly y
+fuentes vienen de CDN), por eso no funciona abriendo el archivo con doble clic.
+
 ## Datos
 
 Los datos ya vienen procesados, así que no hace falta regenerarlos para correr el proyecto.
@@ -62,6 +72,7 @@ python dashboard/build_dashboard.py   # superstore_transformado.csv       ->  as
 ├── common.py              # Utilidades compartidas entre pestañas
 ├── requirements.txt       # Dependencias de Python
 ├── tabs/                  # Una pestaña por archivo, cada una expone layout()
+├── 3DWebDashboard/        # Dashboard 3D (servido por app.py en /3d/)
 ├── assets/
 │   ├── style.css          # Estilos de la app Dash
 │   └── dashboard.html     # Dashboard generado (no editar a mano)

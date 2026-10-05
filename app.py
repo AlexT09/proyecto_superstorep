@@ -5,6 +5,10 @@ Ejecutar:  python app.py   ->   http://127.0.0.1:8050
 """
 import dash_bootstrap_components as dbc
 from dash import Dash, Input, Output, dcc, html
+from flask import send_from_directory
+
+from common import ROOT
+from dashboard.build_dashboard import OUT, build
 
 from tabs import (conclusiones, contexto, dashboard, eda, introduccion, limitaciones,
                   marco_teorico, metodologia, objetivos, problema)
@@ -12,6 +16,19 @@ from tabs import (conclusiones, contexto, dashboard, eda, introduccion, limitaci
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],
            suppress_callback_exceptions=True, title="Proyecto Sample Superstore")
 server = app.server
+
+# Dashboard 3D (3DWebDashboard/). Se sirve aparte de assets/ para que Dash no inyecte su
+# support.js en la app. Su vista de gráficos lee los datos de assets/dashboard.html.
+WEB3D_DIR = ROOT / "3DWebDashboard"
+
+
+@server.route("/3d/<path:filename>")
+def web3d(filename):
+    if filename == "dashboard_data.html":
+        if not OUT.exists():
+            build()
+        return send_from_directory(OUT.parent, OUT.name)
+    return send_from_directory(WEB3D_DIR, filename)
 
 # (id, etiqueta, módulo) — el orden define la navegación
 TABS = [
