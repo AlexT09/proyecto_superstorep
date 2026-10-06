@@ -3,7 +3,9 @@
 Análisis exploratorio de datos (EDA) del dataset **Sample Superstore** para responder la
 pregunta de negocio: **¿qué factores (categoría, región, segmento) explican el nivel de ventas?**
 
-Todo el proyecto es Python: una app **Dash** con una pestaña por sección (introducción, contexto,
+## Contenido
+
+Una app **Dash** con una pestaña por sección (introducción, contexto,
 EDA, conclusiones…). La pestaña **Dashboard** muestra un dashboard de ventas interactivo
 generado con **Plotly** como un HTML autocontenido (`assets/dashboard.html`).
 
