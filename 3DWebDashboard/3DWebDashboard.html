@@ -181,11 +181,12 @@ class Component extends DCLogic {
     addEventListener('resize', this.resize); this.resize();
 
     // Ring: R=891 with the camera at the centre (perspective=891) so cards are tangent and face it; 37 cards, cull at 42°
-    const cards = [...this.ringRef.current.querySelectorAll('[data-card]')];
-    const R = 891, step = 360 / cards.length;
+    // Las tarjetas se buscan en cada cuadro: al llegar los datos (setState) el anillo se vuelve a
+    // renderizar y los nodos pueden ser otros.
+    const R = 891, step = 360 / 37;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let phase = -2, last = performance.now();
-    const place = () => cards.forEach((el, i) => {
+    const place = () => this.ringRef.current.querySelectorAll('[data-card]').forEach((el, i) => {
       const a = ((i * step + phase) % 360 + 540) % 360 - 180;
       if (Math.abs(a) > 42) { el.style.visibility = 'hidden'; return; }
       el.style.visibility = 'visible';
