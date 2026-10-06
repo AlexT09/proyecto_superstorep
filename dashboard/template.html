@@ -5,249 +5,137 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard de ventas · Sample Superstore</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 __PLOTLY__
 <style>
-  :root {
-    color-scheme: light;
-    --bg: #F5F7FA; --card: #ffffff; --line: #E9EAF2;
-    --ink: #2f3247; --ink-soft: #5c6078; --muted: #7a7e96;
-    --brand: #2E6F95; --brand-dark: #1F5570; --brand-light: #EAF2F7;
-    --shadow: 0 2px 10px rgba(31,85,112,.07);
-    --gap: 16px; --radius: 12px;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--ink); font-family: 'Nunito', 'Segoe UI', sans-serif; line-height: 1.45; }
-  .wrap { max-width: 1400px; margin: 0 auto; padding: var(--gap); }
-
-  header.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
-  header.top h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -.01em; }
-  header.top p { color: var(--muted); font-size: .92rem; }
-  header.top .period { font-size: .8rem; color: var(--muted); }
-
-  .filters { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; background: var(--card); border: 1px solid var(--line);
-             border-radius: var(--radius); padding: 12px 16px; box-shadow: var(--shadow); margin-bottom: var(--gap); position: sticky; top: 0; z-index: 5; }
-  .filter-group { display: flex; flex-direction: column; gap: 3px; }
-  .filter-group label { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-  .filter-group select { min-width: 150px; padding: 6px 10px; border: 1px solid #D5D8E3; border-radius: 8px; background: #fff; color: var(--ink);
-                         font: inherit; font-size: .9rem; cursor: pointer; }
-  .filter-group select:focus-visible, button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-  .btn-reset { margin-left: auto; padding: 7px 14px; border: 1px solid #D5D8E3; border-radius: 8px; background: #fff; color: var(--ink-soft);
-               font: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; }
-  .btn-reset:hover { background: var(--brand-light); color: var(--brand-dark); }
-
-  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--gap); margin-bottom: var(--gap); }
-  .kpi { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 14px 18px; box-shadow: var(--shadow); }
-  .kpi .label { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-  .kpi .value { font-size: 1.7rem; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-
-  .grid { display: grid; gap: var(--gap); margin-bottom: var(--gap); }
-  .g-2 { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
-  .g-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; min-width: 0; }
-  .card h2 { font-size: .98rem; font-weight: 800; margin-bottom: 6px; }
-  .map-card { margin-bottom: var(--gap); }
-
-  .findings ul { padding-left: 18px; font-size: .9rem; }
-  .findings li + li { margin-top: 8px; }
-  .findings code { color: var(--brand-dark); font-weight: 700; }
-
-  footer { font-size: .78rem; color: var(--muted); padding: 6px 2px 18px; }
-
-  @media (max-width: 560px) {
-    .g-2 { grid-template-columns: 1fr; }
-    .filter-group select { min-width: 0; width: 100%; }
-    .filter-group { flex: 1 1 45%; }
-    .btn-reset { margin-left: 0; }
-  }
-  @media print { .filters { position: static; } .btn-reset { display: none; } .card, .kpi { break-inside: avoid; box-shadow: none; } }
+:root{
+  --ink:#161b22; --navy:#1F5570; --steel:#6d8f99; --mist:#c3d1d5; --haze:#e7eef0;
+  --soft:#f5f6f6; --neg:#8e2c3a;
+  --bg:#f3f3f1; --card:#ffffff; --text:#1d2127; --muted:#6b7078; --line:#e2e2de;
+  --gap:20px; --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+.top{background:var(--ink);color:#fff}
+.top .in{max-width:1440px;margin:0 auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:18px}
+.brand .eyebrow{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--mist);font-weight:600}
+.brand h1{font-size:22px;font-weight:600;letter-spacing:-.2px;margin-top:4px}
+.brand p{font-size:13px;color:#a3aab3;margin-top:2px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:#8a929c;font-weight:500}
+.fg select{padding:8px 12px;border-radius:6px;border:1px solid #343c47;background:#212832;color:#fff;font:inherit;font-size:13px;min-width:130px;cursor:pointer}
+.fg select:focus-visible,button.reset:focus-visible{outline:2px solid var(--mist);outline-offset:1px}
+.fg select option{color:#111;background:#fff}
+button.reset{padding:8px 16px;border-radius:6px;border:1px solid var(--mist);background:transparent;color:#e6eaee;font:inherit;font-weight:600;font-size:13px;cursor:pointer;transition:.15s}
+button.reset:hover{background:#e6eaee;color:var(--ink)}
+.wrap{max-width:1440px;margin:0 auto;padding:var(--gap) 28px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--gap);margin-bottom:var(--gap)}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--navy)}
+.kpi .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:500}
+.kpi .v{font-size:28px;font-weight:700;color:var(--ink);margin:6px 0 4px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12px;font-weight:600;color:var(--muted);display:inline-block;padding:2px 8px;border-radius:20px;background:#f2f4f7}
+.kpi .d.pos{color:var(--navy);background:var(--haze)} .kpi .d.neg{color:var(--neg);background:#fbeceb}
+.kpi .d:empty{display:none}
+.section-title{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0 12px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap);margin-bottom:var(--gap)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px 0;min-width:0;display:flex;flex-direction:column}
+.card h3{font-size:15px;font-weight:600;color:var(--ink)}
+.card .sub{font-size:12.5px;color:var(--muted);margin:2px 0 14px}
+.s8{grid-column:span 8}.s4{grid-column:span 4}.s6{grid-column:span 6}.s12{grid-column:span 12}
+.insight{margin:18px -22px 0;padding:14px 22px 16px 19px;background:var(--soft);border-top:1px solid var(--line);border-left:3px solid var(--navy);border-radius:0 0 var(--r) var(--r);font-size:13.5px;color:#3b4048;flex:1}
+.insight .tag{display:block;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:4px}
+.insight p+p{margin-top:6px}
+.insight b{color:var(--ink);font-weight:600}
+footer{font-size:12px;color:var(--muted);text-align:center;padding:10px 0 24px}
+.calidad{font-size:12.5px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-left:3px solid var(--steel);border-radius:var(--r);padding:10px 16px;margin-bottom:12px}
+.calidad b{color:var(--ink);font-weight:600}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:980px){.s8,.s4,.s6{grid-column:span 12}}
+@media (max-width:600px){.kpis{grid-template-columns:repeat(2,1fr)}.top .in,.wrap{padding-left:16px;padding-right:16px}.fg select{min-width:0;width:100%}.fg{flex:1 1 45%}}
 </style>
 </head>
 <body>
+<div class="top"><div class="in">
+  <div class="brand"><div class="eyebrow">EDA · Sample Superstore</div><h1>Superstore · Ventas</h1><p>__SUBTITULO__</p></div>
+  <div class="filters">
+    <div class="fg"><label for="f-cat">Categoría</label><select id="f-cat"><option value="-1">Todas</option></select></div>
+    <div class="fg"><label for="f-reg">Región</label><select id="f-reg"><option value="-1">Todas</option></select></div>
+    <div class="fg"><label for="f-seg">Segmento</label><select id="f-seg"><option value="-1">Todos</option></select></div>
+    <div class="fg"><label for="f-year">Año</label><select id="f-year"><option value="all">Todos</option>__YEARS__</select></div>
+    <button class="reset" id="btn-reset" type="button">Limpiar filtros</button>
+  </div>
+</div></div>
+
 <div class="wrap">
-  <header class="top">
-    <div>
-      <h1>Dashboard de ventas · Sample Superstore</h1>
-      <p>¿Qué factores (categoría, región, segmento) explican el nivel de ventas (<code>Sales</code>)?</p>
-    </div>
-    <div class="period">Periodo: __PERIODO__</div>
-  </header>
+<section class="kpis" id="kpis" aria-label="Indicadores"></section>
 
-  <section class="filters" aria-label="Filtros">
-    <div class="filter-group"><label for="f-cat">Categoría</label>
-      <select id="f-cat"><option value="-1">Todas</option></select></div>
-    <div class="filter-group"><label for="f-reg">Región</label>
-      <select id="f-reg"><option value="-1">Todas</option></select></div>
-    <div class="filter-group"><label for="f-seg">Segmento</label>
-      <select id="f-seg"><option value="-1">Todos</option></select></div>
-    <div class="filter-group"><label for="f-year">Año</label>
-      <select id="f-year"><option value="all">Todos</option>__YEARS__</select></div>
-    <button class="btn-reset" id="btn-reset" type="button">Limpiar filtros</button>
-  </section>
+<div class="section-title" id="sec-dist">Distribución de ventas</div>
+<section class="grid">
+  <div class="card s8"><h3>Distribución de Sales</h3><div class="sub">Pedidos por valor de venta (hasta $1,000); punteadas: mediana y media</div>
+    <div id="fig-hist"></div><div class="insight" id="ins-fig-hist"></div></div>
+  <div class="card s4"><h3>Categorías: volumen vs. valor</h3><div class="sub">Participación en pedidos y en ventas</div>
+    <div id="fig-vv-cat"></div><div class="insight" id="ins-fig-vv-cat"></div></div>
+</section>
+<section class="grid">
+  <div class="card s6"><h3>Regiones: volumen vs. valor</h3><div class="sub">Participación en pedidos y en ventas</div>
+    <div id="fig-vv-reg"></div><div class="insight" id="ins-fig-vv-reg"></div></div>
+  <div class="card s6"><h3>Segmentos: volumen vs. valor</h3><div class="sub">Participación en pedidos y en ventas</div>
+    <div id="fig-vv-seg"></div><div class="insight" id="ins-fig-vv-seg"></div></div>
+</section>
 
-  <section class="kpi-row" aria-label="Resumen de Sales">
-    <div class="kpi"><div class="label">Pedidos</div><div class="value" id="k-n">–</div></div>
-    <div class="kpi"><div class="label">Media de Sales</div><div class="value" id="k-mean">–</div></div>
-    <div class="kpi"><div class="label">Mediana de Sales</div><div class="value" id="k-median">–</div></div>
-    <div class="kpi"><div class="label">Máximo de Sales</div><div class="value" id="k-max">–</div></div>
-  </section>
+<div class="section-title" id="sec-fact">Ventas por categoría, región y segmento</div>
+<section class="grid">
+  <div class="card s4"><h3>Sales por categoría</h3><div class="sub">Escala log; línea: mediana, punteada: media</div>
+    <div id="fig-box-cat"></div><div class="insight" id="ins-fig-box-cat"></div></div>
+  <div class="card s4"><h3>Sales por región</h3><div class="sub">Escala log; línea: mediana, punteada: media</div>
+    <div id="fig-box-reg"></div><div class="insight" id="ins-fig-box-reg"></div></div>
+  <div class="card s4"><h3>Sales por segmento</h3><div class="sub">Escala log; línea: mediana, punteada: media</div>
+    <div id="fig-box-seg"></div><div class="insight" id="ins-fig-box-seg"></div></div>
+</section>
 
-  <section class="grid g-2">
-    <div class="card findings">
-      <h2>Hallazgos del EDA</h2>
-      <ul>
-        <li>El análisis univariado muestra que <code>Sales</code> tiene una distribución muy sesgada hacia valores
-          bajos, con pocos pedidos de alto valor.</li>
-        <li>El análisis bivariado indica que <code>Category</code> es el factor que más explica diferencias en el
-          valor de venta — Technology y Furniture tienen pedidos individuales más grandes, mientras que Office
-          Supplies domina en volumen pero con pedidos de menor valor.</li>
-        <li><code>Region</code> y <code>Segment</code> muestran diferencias más leves.</li>
-        <li>El descuento no se relaciona linealmente con las ventas, como se observa en el gráfico de bins 2D.</li>
-        <li>Los puntos muestran un patrón que se repite cada año: las ventas son más bajas a comienzos de año y suben
-          hacia el final, lo que sugiere un comportamiento estacional.</li>
-        <li>Los pedidos se concentran en pocos estados: California (2001), New York (1128) y Texas (985) suman el
-          41.2% del total, y son los estados con más pedidos de West, East y Central.</li>
-      </ul>
-    </div>
-    <div class="card"><h2>Distribución de Sales</h2><div id="fig-hist"></div></div>
-  </section>
+<div class="section-title" id="sec-rel">Relación entre variables</div>
+<section class="grid">
+  <div class="card s4"><h3>Pedidos por categoría y región</h3><div class="sub">Tamaño del círculo: número de pedidos</div>
+    <div id="fig-bubble"></div><div class="insight" id="ins-fig-bubble"></div></div>
+  <div class="card s4"><h3>Bins 2D: Discount vs. Sales</h3><div class="sub">Pedidos por descuento y valor de venta (hasta $1,500)</div>
+    <div id="fig-bins"></div><div class="insight" id="ins-fig-bins"></div></div>
+  <div class="card s4"><h3>Correlación entre variables continuas</h3><div class="sub">Coeficiente de Pearson</div>
+    <div id="fig-corr"></div><div class="insight" id="ins-fig-corr"></div></div>
+</section>
 
-  <section class="grid g-3">
-    <div class="card"><h2>Pedidos por categoría</h2><div id="fig-n-cat"></div></div>
-    <div class="card"><h2>Pedidos por región</h2><div id="fig-n-reg"></div></div>
-    <div class="card"><h2>Pedidos por segmento</h2><div id="fig-n-seg"></div></div>
-  </section>
+<div class="section-title" id="sec-trend">Geografía y tendencia</div>
+<section class="grid">
+  <div class="card s12"><h3>Pedidos por estado</h3><div class="sub">Número de pedidos por estado</div>
+    <div id="fig-map"></div><div class="insight" id="ins-fig-map"></div></div>
+</section>
+<section class="grid">
+  <div class="card s6"><h3>Evolución mensual de ventas</h3><div class="sub">Ventas por mes</div>
+    <div id="fig-trend"></div><div class="insight" id="ins-fig-trend"></div></div>
+  <div class="card s6"><h3>Tendencia de ventas por categoría</h3><div class="sub">Ventas por mes de cada categoría</div>
+    <div id="fig-trend-cat"></div><div class="insight" id="ins-fig-trend-cat"></div></div>
+</section>
 
-  <section class="card map-card">
-    <h2>Pedidos por estado</h2><div id="fig-map"></div>
-  </section>
-
-  <section class="grid g-3">
-    <div class="card"><h2>Sales por categoría</h2><div id="fig-box-cat"></div></div>
-    <div class="card"><h2>Sales por región</h2><div id="fig-box-reg"></div></div>
-    <div class="card"><h2>Sales por segmento</h2><div id="fig-box-seg"></div></div>
-  </section>
-
-  <section class="grid g-2">
-    <div class="card"><h2>Correlación entre variables numéricas</h2><div id="fig-corr"></div></div>
-    <div class="card"><h2>Ventas mensuales por categoría</h2><div id="fig-trend"></div></div>
-  </section>
-
-  <footer>Fuente: Sample Superstore. Proyecto: Alex Teran y David Estrada.</footer>
+<div class="calidad" id="calidad"></div>
+<footer>Fuente: Sample – Superstore · Generado con Python + Plotly · Proyecto: Alex Teran y David Estrada</footer>
 </div>
 
 <script id="figs" type="application/json">__FIGS__</script>
 <script id="data" type="application/json">__DATA__</script>
 <script>
+__CORE__
+</script>
+<script>
 (() => {
   const FIGS = JSON.parse(document.getElementById('figs').textContent);
   const D = JSON.parse(document.getElementById('data').textContent);
-  const N = D.Sales.length;
-  const YEAR = D.months.map(m => m.slice(0, 4));
-  const CONFIG = { displayModeBar: false, responsive: true };
+  const dash = SuperstoreDashboard.create(FIGS, D, {
+    pal: __PAL__, config: { displayModeBar: false, responsive: true }, doc: document,
+  });
   const state = { cat: -1, reg: -1, seg: -1, year: 'all' };
-
-  const fmtInt = v => v.toLocaleString('en-US');
-  const fmtUSD = v => `$${v.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`;
-  const median = arr => {
-    const a = Float64Array.from(arr).sort(), h = a.length >> 1;
-    return a.length % 2 ? a[h] : (a[h - 1] + a[h]) / 2;
-  };
-  const pearson = (x, y) => {
-    const n = x.length, mx = x.reduce((a, b) => a + b, 0) / n, my = y.reduce((a, b) => a + b, 0) / n;
-    let sxy = 0, sxx = 0, syy = 0;
-    for (let i = 0; i < n; i++) { const dx = x[i] - mx, dy = y[i] - my; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
-    return sxx && syy ? sxy / Math.sqrt(sxx * syy) : null;
-  };
-
-  const filtered = () => {
-    const out = [];
-    for (let i = 0; i < N; i++) {
-      if (state.cat >= 0 && D.c[i] !== state.cat) continue;
-      if (state.reg >= 0 && D.r[i] !== state.reg) continue;
-      if (state.seg >= 0 && D.s[i] !== state.seg) continue;
-      if (state.year !== 'all' && YEAR[D.m[i]] !== state.year) continue;
-      out.push(i);
-    }
-    return out;
-  };
-
-  // Las figuras conservan el estilo generado en Python; los filtros solo reemplazan sus datos.
-  const draw = id => Plotly.react(id, FIGS[id].data, FIGS[id].layout, CONFIG);
-
-  function updateKPIs(rows) {
-    const v = rows.map(i => D.Sales[i]);
-    const set = (id, txt) => { document.getElementById(id).textContent = txt; };
-    set('k-n', fmtInt(rows.length));
-    set('k-mean', v.length ? fmtUSD(v.reduce((a, b) => a + b, 0) / v.length) : '–');
-    set('k-median', v.length ? fmtUSD(median(v)) : '–');
-    set('k-max', v.length ? fmtUSD(Math.max(...v)) : '–');
-  }
-
-  function updateHist(rows) {
-    FIGS['fig-hist'].data[0].x = rows.map(i => D.Sales[i]).filter(v => v <= D.histMax);
-    draw('fig-hist');
-  }
-
-  function updateCount(id, rows, key, k) {
-    const n = new Array(k).fill(0);
-    for (const i of rows) n[key[i]]++;
-    const t = FIGS[id].data[0];
-    t.y = n;
-    t.text = n.map(v => rows.length ? `${fmtInt(v)} (${(v / rows.length * 100).toFixed(1)}%)` : '');
-    draw(id);
-  }
-
-  function updateMap(rows) {
-    const n = new Array(D.nStates).fill(0);
-    for (const i of rows) n[D.st[i]]++;
-    FIGS['fig-map'].data[0].z = n.map(v => v || null);
-    draw('fig-map');
-  }
-
-  function updateBox(id, rows, key, k) {
-    const ys = Array.from({ length: k }, () => []);
-    for (const i of rows) ys[key[i]].push(D.Sales[i]);
-    FIGS[id].data.forEach((t, j) => { t.y = ys[j]; });
-    draw(id);
-  }
-
-  function updateCorr(rows) {
-    const cols = D.numeric.map(name => rows.map(i => D[name][i]));
-    FIGS['fig-corr'].data[0].z = cols.map(a => cols.map(b => {
-      const r = pearson(a, b);
-      return r === null ? null : Math.round(r * 100) / 100;
-    }));
-    draw('fig-corr');
-  }
-
-  function updateTrend(rows) {
-    const mIdx = D.months.map((_, j) => j).filter(j => state.year === 'all' || YEAR[j] === state.year);
-    const pos = new Map(mIdx.map((j, p) => [j, p]));
-    const sums = D.cats.map(() => new Array(mIdx.length).fill(0));
-    for (const i of rows) { const p = pos.get(D.m[i]); if (p !== undefined) sums[D.c[i]][p] += D.Sales[i]; }
-    FIGS['fig-trend'].data.forEach((t, c) => {
-      t.x = mIdx.map(j => D.months[j]);
-      t.y = sums[c].map(v => Math.round(v * 100) / 100);
-    });
-    draw('fig-trend');
-  }
-
-  function refresh(charts = true) {
-    const rows = filtered();
-    updateKPIs(rows);
-    if (!charts) return;
-    updateHist(rows);
-    updateCount('fig-n-cat', rows, D.c, D.cats.length);
-    updateCount('fig-n-reg', rows, D.r, D.regs.length);
-    updateCount('fig-n-seg', rows, D.s, D.segs.length);
-    updateMap(rows);
-    updateBox('fig-box-cat', rows, D.c, D.cats.length);
-    updateBox('fig-box-reg', rows, D.r, D.regs.length);
-    updateBox('fig-box-seg', rows, D.s, D.segs.length);
-    updateCorr(rows);
-    updateTrend(rows);
-  }
+  const refresh = () => dash.update(state);
 
   const fill = (id, labels) => { const sel = document.getElementById(id); labels.forEach((l, j) => sel.add(new Option(l, j))); };
   fill('f-cat', D.cats); fill('f-reg', D.regs); fill('f-seg', D.segs);
@@ -260,9 +148,7 @@ __PLOTLY__
     document.getElementById('f-year').value = 'all';
     refresh();
   });
-
-  Object.keys(FIGS).forEach(id => Plotly.newPlot(id, FIGS[id].data, FIGS[id].layout, CONFIG));
-  refresh(false);
+  refresh();
 })();
 </script>
 </body>

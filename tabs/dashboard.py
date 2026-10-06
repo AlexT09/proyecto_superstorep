@@ -1,8 +1,9 @@
 """tabs/dashboard.py — Dashboard 3D de ventas embebido vía iframe.
 
 La portada 3D vive en 3DWebDashboard/3DWebDashboard.html y app.py la sirve en /3d/. Su vista
-de gráficos ("Dashboard Superstore.dc.html") toma las figuras y datos de assets/dashboard.html,
-que genera dashboard/build_dashboard.py (app.py lo genera si no existe).
+de gráficos ("Dashboard Superstore.dc.html") toma las figuras y datos de
+3DWebDashboard/dashboard_data.json, que genera dashboard/build_dashboard.py (app.py lo genera si
+no existe).
 """
 from dash import html
 

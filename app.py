@@ -7,8 +7,7 @@ import dash_bootstrap_components as dbc
 from dash import Dash, Input, Output, dcc, html
 from flask import send_from_directory
 
-from common import ROOT
-from dashboard.build_dashboard import OUT, build
+from dashboard.build_dashboard import DATA_OUT, WEB3D_DIR, build
 
 from tabs import (conclusiones, contexto, dashboard, eda, introduccion, limitaciones,
                   marco_teorico, metodologia, objetivos, problema)
@@ -18,16 +17,11 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],
 server = app.server
 
 # Dashboard 3D (3DWebDashboard/). Se sirve aparte de assets/ para que Dash no inyecte su
-# support.js en la app. Su vista de gráficos lee los datos de assets/dashboard.html.
-WEB3D_DIR = ROOT / "3DWebDashboard"
-
-
+# support.js en la app. Sus gráficos leen 3DWebDashboard/dashboard_data.json (se genera si falta).
 @server.route("/3d/<path:filename>")
 def web3d(filename):
-    if filename == "dashboard_data.html":
-        if not OUT.exists():
-            build()
-        return send_from_directory(OUT.parent, OUT.name)
+    if filename == DATA_OUT.name and not DATA_OUT.exists():
+        build()
     return send_from_directory(WEB3D_DIR, filename)
 
 # (id, etiqueta, módulo) — el orden define la navegación
